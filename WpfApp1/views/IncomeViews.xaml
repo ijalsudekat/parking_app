@@ -3,12 +3,169 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp1.views"
+      xmlns:local="clr-namespace:WpfApp1.views" 
+     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:cvm="clr-namespace:WpfApp1.ViewModel.Area"
+      xmlns:cvt="clr-namespace:WpfApp1.converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IncomeViews">
 
-    <Grid>
-        
+    <Page.Resources>
+        <Style TargetType="DataGrid">
+            <!-- Make the border and grid lines a little less imposing -->
+            <Setter Property="BorderBrush" Value="#DDDDDD" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#DDDDDD" />
+            <Setter Property="VerticalGridLinesBrush" Value="#DDDDDD" />
+
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <!-- Highlight a grid row as the mouse passes over -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightCyan" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <!-- Highlight selected rows -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#ff66ccff" />
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Background" Value="#ff66ccff" />
+                                <Setter Property="BorderBrush" Value="Black" />
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <!-- Add some padding around the contents of a cell -->
+                        <Setter Property="Padding" Value="4,3,4,3" />
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Padding="{TemplateBinding Padding}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Background="{TemplateBinding Background}">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="FocusVisualStyle">
+                            <Setter.Value>
+                                <Style TargetType="Control">
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <cvm:AreavIewModels x:Key="cvm_area"/>
+        <cvt:BooleanToVisibilityConverter x:Key="cvt_alert"/>
+    </Page.Resources>
+    <Grid Margin="5" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="27" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                FontSize="20"
+                Grid.Row="0"
+                Grid.Column="1" Height="26" Margin="0,12,0,11.6" Width="298"
+                >
+                <iconPacks:PackIconFontAwesome Kind="MoneyBillAltRegular" />
+                <Run FontWeight="SemiBold" Text="Manage"  />
+                <Run Text="Data Income "  FontWeight="Bold" />
+        </TextBlock>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0.4,297.4,26.8" Grid.RowSpan="2"
+            
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Label Content="Search Data" Grid.Row="0" Grid.Column="0" />
+            <TextBox Name="txtFind" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
+
+            <StackPanel  Grid.Row="1" Grid.Column="1" Orientation="Horizontal" >
+                <Button Width="60" HorizontalAlignment="Left" Content="Search" Margin="0,0,10,0" />
+                <Button Width="70"  HorizontalAlignment="Left" Content="Add income" />
+            </StackPanel>
+            
+        </Grid>
+        <StackPanel
+                VerticalAlignment="Center"
+                Background="{Binding Source={StaticResource cvm_area}, Path=Coloring}"
+                Visibility="{Binding  Source={StaticResource cvm_area}, Path=Visibility, Converter={StaticResource cvt_alert}}"
+                Orientation="Horizontal"
+                Grid.Row="3"
+                Grid.Column="1"
+                Width="Auto"
+                HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Height="0" Margin="0,151.2,104.4,152" 
+                >
+            <iconPacks:PackIconMaterialLight Name="ikonsa" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="White" />
+            <Label Content="{Binding  Source={StaticResource cvm_area}, Path=Message }" Foreground="White" Margin="10,0,0,0" />
+        </StackPanel>
+        <DataGrid x:Name="dgAreas" 
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="5,8.2,10.8,0"
+                  ScrollViewer.CanContentScroll="True" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  HeadersVisibility="Column"
+                  CanUserResizeColumns="False"
+                  ItemsSource="{Binding  Path=AreaData}" BorderBrush="{x:Null}"
+                  EnableRowVirtualization="False" 
+                  RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
+                  SelectedItem="{Binding Source={StaticResource cvm_area}, Path=SelectArea, Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True" Height="25" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Kode income" Width="150"  Binding="{Binding Path=AreaNumber}" />
+                <DataGridTextColumn Header="Kode history" Width="130"  Binding="{Binding Path=Kategori}"  />
+                <DataGridTextColumn Header="Income" Width="200" Binding="{Binding Path=ParkFeesValue}" />
+                <DataGridTextColumn Header="Date" Width="200" Binding="{Binding Path=ParkFeesValue}" />
+                <DataGridTemplateColumn Width="100" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnAvtivity" Content="edit" Width="40"  Command=""  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Page>
