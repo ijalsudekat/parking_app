@@ -1,0 +1,117 @@
+﻿<Window x:Class="WpfApp1.views"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:locvm="clr-namespace:WpfApp1.ViewModel"
+        xmlns:locm="clr-namespace:WpfApp1.Models"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        xmlns:cvt="clr-namespace:WpfApp1.converters"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="areaModel" Height="400" Width="332.4">
+    <Window.Resources>
+        <Style x:Key="cntere" TargetType="{x:Type Label}" >
+            <Setter Property="VerticalAlignment" Value="center"/>
+        </Style>
+        <Style x:Key="tcenter" TargetType="{x:Type TextBox}" >
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style x:Key="cbcenter" TargetType="{x:Type ComboBox}" >
+            <Setter Property="VerticalAlignment" Value="center"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style x:Key="cntAlert" TargetType="{x:Type Label}" >
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <locvm:AreavIewModels x:Key="vm_area"/>
+        <locm:AreaModel x:Key="m_area"/>
+        <BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid Margin="5" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="65" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                FontSize="20"
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <iconPacks:PackIconFontAwesome Name="ikona" Kind="PlusSolid"   />
+                <Run Text="Tambah Data Area "  FontWeight="Bold" FontSize="17" />
+        </TextBlock>
+        <StackPanel 
+            VerticalAlignment="Center"
+            Orientation="Horizontal"
+            Height="25"
+            Grid.Row="1" 
+            Grid.Column="1" 
+            x:Name="stAlert"
+            Background="{Binding Source={StaticResource vm_area}, Path=Coloring}"
+            Visibility="{Binding Source={StaticResource vm_area}, Path=Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Grid.ColumnSpan="2" >
+            <iconPacks:PackIconMaterialLight Foreground="White" Name="iconc" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" />
+            <Label Margin="10,0,0,0" Foreground="White" Content="{Binding Source={StaticResource vm_area}, Path=Message }" VerticalAlignment="Center" />
+        </StackPanel>
+        <Label Content="Number " Style="{StaticResource cntere}" Grid.Row="2" Grid.Column="1" />
+        <Label Content="Kategori " Style="{StaticResource cntere}" Grid.Row="4" Grid.Column="1"/>
+        <Label Content="Salary" Style="{StaticResource cntere}" Grid.Row="6" Grid.Column="1"/>
+
+        <TextBox Grid.Row="2" 
+                 Style="{StaticResource tcenter}" 
+                
+                 x:Name="txtNum"
+                 Tag="txtAlert"
+                  Text="{Binding Source={StaticResource vm_area},Path=CurrentArea.AreaNumber,  TargetNullValue='', Mode=TwoWay}" 
+                 KeyDown="txtNum_KeyDown"
+                 Grid.Column="2" />
+        <ComboBox Grid.Row="4" 
+                  ItemsSource="{Binding Source={StaticResource vm_area}, Path=Kategoris, Mode=OneWay}" 
+                  DisplayMemberPath="KategoriHall"
+                  SelectedValuePath="KategoriId"
+                  SelectedValue="{Binding Source={StaticResource vm_area}, Path=CurrentArea.KategoriId, Mode=TwoWay}"
+                  Style="{StaticResource cbcenter}" 
+                  Grid.Column="2" 
+                  Tag="cbAlert1"
+                  Name="cbKat"
+                  />
+        <ComboBox Grid.Row="6" 
+                  Style="{StaticResource cbcenter}" 
+                  ItemsSource="{Binding Source={StaticResource vm_area}, Path=FeesModels, Mode=OneWay}" 
+                  SelectedValue="{Binding Source={StaticResource vm_area}, Path=CurrentArea.FessId, Mode=TwoWay}"
+                  DisplayMemberPath="FeesValue"
+                  SelectedValuePath="ParkFeesId"
+                  x:Name="cbFees"
+                   Tag="cbAlert2"
+                  Grid.Column="2" />
+        <Label x:Name="txtAlert" Margin="0,-8,0,0" VerticalAlignment="Top" Content="" Style="{StaticResource cntAlert }" Grid.Row="3" Grid.Column="2" />
+        <Label  Content="" Name="txtCbk"  Margin="0,-8,0,0" Style="{StaticResource cntAlert }" Grid.Row="5" Grid.Column="2" />
+        <Label  Content="" Name="txtCbf"  Margin="0,-8,0,0" Style="{StaticResource cntAlert }" Grid.Row="7" Grid.Column="2" />
+        <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal"  >
+            <Button Content="Save" Height="30" Click="Button_Click_1" Width="70"  Command="{Binding Source={StaticResource vm_area}, Path=SaveCommand}" CommandParameter="{Binding}" />
+            <Button Content="Cancel" Height="30" Width="70" Click="Button_Click" Margin="10,0,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>

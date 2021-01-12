@@ -1,0 +1,273 @@
+﻿<Page x:Class="WpfApp1.views.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:local="clr-namespace:WpfApp1.views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DashboardPage">
+    <Page.Resources>
+        <Style x:Key="HoveredText" TargetType="{x:Type TextBlock}" >
+            
+            <Style.Triggers>
+               
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White" Opacity="0.3"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="menutitle" TargetType="{x:Type Run}">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BaselineAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="headermenu" TargetType="{x:Type Run}">
+           
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Page.Resources>
+ 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0"  Background="#0072de" >
+                <Grid.RowDefinitions>
+                    <!-- menu dahdboard-->
+                    <RowDefinition Height="50" />
+                    <!-- menu management-->
+                    <RowDefinition Height="Auto" />
+                    <!-- menu data master-->
+                    <RowDefinition Height="Auto" />
+                    <!-- menu data setting-->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Grid.Row="0"
+                >
+                <Run 
+                    Text="Smart" 
+                    FontSize="25"
+                    Foreground="#ecf0f1"
+                    />
+                <Run 
+                    Text="Parking"
+                    FontSize="30"
+                    Foreground="White"
+                    />
+                </TextBlock>
+                <Grid Grid.Row="1" Margin="6 0 6 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="240" />
+
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                    VerticalAlignment="Center"
+                    Background="#1a459c"
+                    Padding="10"
+                    Grid.Row="0"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"
+                    >
+                    <Path Width="18"
+                          VerticalAlignment="Center"
+                          Height="15"
+                          Stretch="Uniform"
+                          Fill="WhiteSmoke"
+                          Data="
+                          M18.121,9.88l-7.832-7.836c-0.155-0.158-0.428-0.155-0.584,0L1.842,9.913c-0.262,0.263-0.073,
+                          0.705,0.292,0.705h2.069v7.042c0,0.227,0.187,0.414,0.414,0.414h3.725c0.228,0,0.414-0.188,
+                          0.414-0.414v-3.313h2.483v3.313c0,0.227,0.187,0.414,0.413,0.414h3.726c0.229,0,0.414-0.188,
+                          0.414-0.414v-7.042h2.068h0.004C18.331,10.617,18.389,10.146,18.121,9.88 M14.963,
+                          17.245h-2.896v-3.313c0-0.229-0.186-0.415-0.414-0.415H8.342c-0.228,0-0.414,0.187-0.414,
+                          0.415v3.313H5.032v-6.628h9.931V17.245z M3.133,9.79l6.864-6.868l6.867,6.868H3.133z
+                          "/>
+                    <Run Text="dashboard" FontSize="14" Foreground="White" />
+                    </TextBlock>
+
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <TextBlock 
+                        Height="50"
+                        Grid.Row="0"
+                        Padding="10 0 0 0">
+                        <Run Text="MANAGEMENT" Style="{StaticResource headermenu}" />
+                        </TextBlock>
+                        <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="1"
+                        Style="{StaticResource HoveredText}"
+                            MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_6"
+                        Padding="10">
+                        
+                         <iconPacks:PackIconMaterialLight 
+                             Kind="Sitemap"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" space parking" Style="{StaticResource menutitle}" />
+                        </TextBlock>
+                        <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="2"
+                        Style="{StaticResource HoveredText}"    
+                            MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_5"
+                        Padding="10">  
+                         <iconPacks:PackIconMaterialLight 
+                             Kind="CreditCard"
+                             Foreground="White"
+                            
+                             />
+                        
+                        <Run Text=" Income" Style="{StaticResource menutitle}"/>
+                        </TextBlock>
+                        <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="3"
+                          Style="{StaticResource HoveredText}"    
+                            MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_4"
+                        Padding="10">
+                        
+                         <iconPacks:PackIconBootstrapIcons 
+                             Kind="ClockHistory"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Hsitory" Style="{StaticResource menutitle}" />
+                        </TextBlock>
+                        <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="4"
+                        MouseLeftButtonUp="TextBlock_MouseLeftButtonUp_1"
+                        Style="{StaticResource HoveredText}"    
+                        Padding="10">
+                        
+                         <iconPacks:PackIconBootstrapIcons 
+                             Kind="UpcScan"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Scanning area" Style="{StaticResource menutitle}" />
+                        </TextBlock>
+                        <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="5"
+                        Style="{StaticResource HoveredText}"
+                        MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_3"
+                        Padding="10">
+                        
+                         <iconPacks:PackIconBootstrapIcons 
+                             Kind="People"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Visitors / User" Style="{StaticResource menutitle}" />
+                        </TextBlock>
+                    </Grid>
+
+                </Grid>
+                <Grid Grid.Row="3" Margin="6 0 6 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="20" />
+
+                    </Grid.RowDefinitions>
+                    <TextBlock 
+                        Height="50"
+                        Grid.Row="0"
+                        Padding="10 0 0 0">
+                        <Run Text="DATA SOURCE" Style="{StaticResource headermenu}" />
+                    </TextBlock>
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="1"
+                        Style="{StaticResource HoveredText}"
+                        MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+                        Padding="10">
+                        
+                         <iconPacks:PackIconFontAwesome 
+                             Kind="BuildingRegular"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Area" Style="{StaticResource menutitle}" />
+                    </TextBlock>
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="2"
+                        Style="{StaticResource HoveredText}"
+                        MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"
+                        Padding="10">
+                        
+                         <iconPacks:PackIconFontAwesome 
+                             Kind="BufferBrands"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Area Category" Style="{StaticResource menutitle}" />
+                    </TextBlock>
+                </Grid>
+                <Grid Grid.Row="4" Margin="6 0 6 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="40" />
+
+                    </Grid.RowDefinitions>
+                    <TextBlock 
+                        Height="50"
+                        Grid.Row="0"
+                        Padding="10 0 0 0">
+                        <Run Text="SETTINGS" Style="{StaticResource headermenu}" />
+                    </TextBlock>
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        Grid.Row="1"
+                        Padding="10"
+                        Style="{StaticResource HoveredText}"
+                        MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_2"
+                      >
+
+                         <iconPacks:PackIconFontAwesome 
+                             Kind="MoneyBillAltSolid"
+                             Foreground="White"
+                             />
+                        
+                        <Run Text=" Fees area" Style="{StaticResource menutitle}" />
+                    </TextBlock>
+
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" >
+                <Frame Name="ContentFrame" Grid.Column="1" />
+               
+            </Grid>
+
+        </Grid>
+    
+
+</Page>
