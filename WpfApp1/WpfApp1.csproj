@@ -413,6 +413,9 @@
       <DependentUpon>ScannerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\Test.cs" />
+    <Compile Include="views\UserActivity.xaml.cs">
+      <DependentUpon>UserActivity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\UserViews.xaml.cs">
       <DependentUpon>UserViews.xaml</DependentUpon>
     </Compile>
@@ -484,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\ScannerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\UserActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -163,7 +163,6 @@
                 <DataGridTextColumn Header="Usernsme" Width="150"  Binding="{Binding Path=AreaNumber}" />
                 <DataGridTextColumn Header="Name" Width="130"  Binding="{Binding Path=Kategori}"  />
                 <DataGridTextColumn Header="Activity" Width="200" Binding="{Binding Path=ParkFeesValue}" />
-                
                 <DataGridTemplateColumn Width="100" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -171,7 +170,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-               
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
