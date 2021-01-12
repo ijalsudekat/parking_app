@@ -3,26 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.views"
-        
+        xmlns:local="clr-namespace:WpfApp1.views" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="UserActivity" Height="387.6" Width="282.4">
+        Title="UserActivity" Height="387.6" Width="288.8">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Label Content="Activity user" FontSize="23" HorizontalContentAlignment="Center" />
-        </Grid>
-        <Grid Grid.Row="1">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30" />
-                <ColumnDefinition  />
-                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="182*"/>
+                <ColumnDefinition Width="115*"/>
+               <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-           
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0.2" >
+                <iconPacks:PackIconFontAwesome Kind="HistorySolid" VerticalAlignment="Center" Width="40" />
+                <Label Content="User Activity " FontSize="14"  VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.ColumnSpan="2" Margin="0,31,0,0.4" Grid.RowSpan="2" >
+
+                <Label Content="Username" VerticalAlignment="Center" FontSize="14" />
+                <Label Content=":" VerticalAlignment="Center" FontSize="14"  />
+                <Label Content="" VerticalAlignment="Center" FontSize="14"  Width="100" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,30.8,0,20.4" Grid.RowSpan="3" >
+
+                <Label Content="Last activity" VerticalAlignment="Center" FontSize="14" />
+                <Label Content=":" VerticalAlignment="Center" FontSize="14"  />
+                <Label Content="" VerticalAlignment="Center" FontSize="14"  Width="100" />
+            </StackPanel>
+            <ListView Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0.4" >
+                <ListView.View>
+
+                    <GridView AllowsColumnReorder="true"
+              ColumnHeaderToolTip="Employee Information">
+
+                        <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=FirstName}" 
+                      Header="Kode activity" Width="80"/>
+
+                        <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=LastName}" 
+                      Width="100">
+                            <GridViewColumnHeader>Activity date
+                                <GridViewColumnHeader.ContextMenu>
+                                    <ContextMenu   
+                                        Name="LastNameCM">
+                                        <MenuItem Header="Ascending" />
+                                        <MenuItem Header="Descending" />
+                                    </ContextMenu>
+                                </GridViewColumnHeader.ContextMenu>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=EmployeeNumber}" 
+                      Header="in" Width="50"/>
+                        <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=EmployeeNumber}" 
+                      Header="out" Width="50"/>
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
         </Grid>
     </Grid>
 </Window>
