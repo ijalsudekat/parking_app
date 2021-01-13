@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfApp1.Models;
 using WpfApp1.Services;
+using System.Windows.Forms;
 
 namespace WpfApp1.ViewModel.Kategori
 {
@@ -80,6 +81,7 @@ namespace WpfApp1.ViewModel.Kategori
 
         public void getataKat()
         {
+           
             Kategosris = new ObservableCollection<KategoriModels>(_services.GetAll());
         }
 
@@ -143,13 +145,14 @@ namespace WpfApp1.ViewModel.Kategori
 
                 Kategosris = (ObservableCollection<KategoriModels>)obj;
 
-                if (dataadd)
+                if (dataadd["df"] != "0" )
                 {
                     Kategosris.Add(new KategoriModels() { KategoriHall = Katname, katNumber = Katnumber });
                     Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
                     Visibility = true;
-                    Message = "data saveed";
+                    Message = dataadd["el"];
                     var cs = await delayid();
+                    getataKat();
                     if (cs)
                         Visibility = false;
                 }
@@ -157,7 +160,7 @@ namespace WpfApp1.ViewModel.Kategori
                 {
                     Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
                     Visibility = true;
-                    Message = "Save data failed";
+                    Message = dataadd["el"];
                     var cs = await delayid();
                     if (cs)
                         Visibility = false;
@@ -194,6 +197,105 @@ namespace WpfApp1.ViewModel.Kategori
                     editdata = new RelayCommand<object>(EditData);
                 return editdata;
             }
+        }
+
+        private ICommand saveedit;
+        public ICommand Saveeditcommand
+        {
+            get
+            {
+                if (saveedit == null)
+                    saveedit = new RelayCommand<object>(Saveedit);
+                return saveedit;
+            }
+
+        }
+
+        private ICommand deleteData;
+        public ICommand Deletecommand
+        {
+            get
+            {
+                if (deleteData == null)
+                    deleteData = new RelayCommand<object>(deletekat);
+                return deleteData;
+            }
+        }
+
+
+        public void deletekat(object obj)
+        {
+            Ids = SelectedItem.KategoriId;
+
+            var confirm = MessageBox.Show(string.Format("this data {0} has ben deleted are you sure ?", SelectedItem.KategoriHall), "Confirm", MessageBoxButtons.YesNo);
+
+            if (confirm == DialogResult.Yes)
+            {
+                var data = _services.deleteData(SelectedItem.KategoriId);
+                if (data)
+                {
+                    Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
+                    Visibility = true;
+                    Message = "Delete Data successfull";
+
+                }
+                else
+                {
+                    Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                    Visibility = true;
+                    Message = "Delete data failed";
+                }
+            }
+
+        }
+
+        public async void Saveedit(object obj)
+        {
+            _katmodel.KategoriHall = Katname;
+            _katmodel.katNumber = Katnumber;
+            _katmodel.KategoriId = Ids;
+            
+
+            if (String.IsNullOrEmpty(Katname) || String.IsNullOrEmpty(Katnumber.ToString()))
+            {
+                Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                Visibility = true;
+                Message = " Input wajib di isi ";
+                var cs = await delayid();
+                if (cs)
+                    Visibility = false;
+            }
+            else
+            {
+                var dataadd = _services.EditSave(_katmodel);
+
+                KategoriModels kms = Kategosris.Where(xc => xc.KategoriId == _katmodel.KategoriId).First();
+
+
+                if (dataadd["df"] != "0")
+                {
+                    getataKat();
+                    Katname = "";
+                    Katnumber = 0;
+                    Ids = 0;
+                    Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
+                    Visibility = true;
+                    Message = dataadd["el"];
+                    var cs = await delayid();
+                    if (cs)
+                        Visibility = false;
+                }
+                else
+                {
+                    Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                    Visibility = true;
+                    Message = dataadd["el"];
+                    var cs = await delayid();
+                    if (cs)
+                        Visibility = false;
+                }
+            }
+
         }
 
         private ICommand resetcommand;
@@ -245,7 +347,7 @@ namespace WpfApp1.ViewModel.Kategori
             Editnable = true;
             Katname = SelectedItem.KategoriHall;
             Katnumber = SelectedItem.katNumber;
-            Ids = Convert.ToInt32(obj);
+            Ids = SelectedItem.KategoriId;
         }
 
         private bool _enabled;

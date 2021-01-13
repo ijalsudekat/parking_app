@@ -65,7 +65,7 @@
                 <Label/>
                 <Button Width="50" Content="Reset" Command="{Binding Source={StaticResource cvm_kat}, Path=Resetcommand}" />
                 <Label/>
-                <Button Width="40" x:Name="cvd" Content="Edit" IsEnabled="{Binding Source={StaticResource cvm_kat}, Path=Editnable}" CommandParameter="{Binding Kategosris,  Source={StaticResource cvm_kat}}" Command="{Binding Path=Editcommand,  Source={StaticResource cvm_kat}}" />
+                <Button Width="40" x:Name="cvd" Content="Edit" IsEnabled="{Binding Source={StaticResource cvm_kat}, Path=Editnable}" CommandParameter="{Binding Kategosris,  Source={StaticResource cvm_kat}}" Command="{Binding Path=Saveeditcommand,  Source={StaticResource cvm_kat}}" />
             </StackPanel>
             <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
@@ -138,15 +138,13 @@
                   Margin="5,8,8,8"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  ItemsSource="{Binding Path=Kategosris}"
+                  ItemsSource="{Binding Path=Kategosris, Source={StaticResource cvm_kat}, Mode=OneWay}"
                   SelectedItem="{Binding Source={StaticResource cvm_kat}, Path=SelectedItem, Mode=TwoWay}"
                   IsSynchronizedWithCurrentItem="True"
                   >
                     <DataGrid.Columns>
-                       
                         <DataGridTextColumn Header="Kategori Name" Binding="{Binding Path=KategoriHall}" Width="150"/>
                         <DataGridTextColumn Header="Kategori Number" Binding="{Binding Path=katNumber}" Width="150"/>
-                        
                         <DataGridTemplateColumn Width="100" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
