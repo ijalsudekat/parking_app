@@ -82,9 +82,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="60" />
             <ColumnDefinition />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
         <TextBlock
                 VerticalAlignment="Center"
@@ -113,22 +113,10 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Label Content="Search Data" Grid.Row="0" Grid.Column="0" />
-            <TextBox Name="txtFind" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
-            <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" />
+            <TextBox Name="txtFind" Width="140" Height="20" Text="{Binding Filter, Mode=TwoWay}" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
+            <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" Command="{Binding Filtercommand}" CommandParameter="{Binding SlotList}" />
         </Grid>
-        <StackPanel
-                VerticalAlignment="Center"
-                Background="{Binding Source={StaticResource cvm_area}, Path=Coloring}"
-                Visibility="{Binding  Source={StaticResource cvm_area}, Path=Visibility, Converter={StaticResource cvt_alert}}"
-                Orientation="Horizontal"
-                Grid.Row="3"
-                Grid.Column="1"
-                Width="Auto"
-                HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Height="0" Margin="0,151.2,104.4,152" 
-                >
-            <iconPacks:PackIconMaterialLight Name="ikonsa" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="White" />
-            <Label Content="{Binding  Source={StaticResource cvm_area}, Path=Message }" Foreground="White" Margin="10,0,0,0" />
-        </StackPanel>
+       
         <DataGrid x:Name="dgAreas" 
                   Grid.Row="3"
                   Grid.Column="1"
@@ -139,24 +127,20 @@
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
                   CanUserResizeColumns="False"
-                  ItemsSource="{Binding  Path=AreaData}" BorderBrush="{x:Null}"
+                  ItemsSource="{Binding  Path=SlotList}" BorderBrush="{x:Null}"
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
-                  SelectedItem="{Binding Source={StaticResource cvm_area}, Path=SelectArea, Mode=TwoWay}"
+                  
                   IsSynchronizedWithCurrentItem="True" Height="25" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="No" Width="150"  Binding="{Binding Path=AreaNumber}" />
-                <DataGridTextColumn Header="Slot Kode" Width="130"  Binding="{Binding Path=Kategori}"  />
-                <DataGridTextColumn Header="Slot User" Width="130"  Binding="{Binding Path=Kategori}"  />
-                <DataGridTextColumn Header="Slot number" Width="200" Binding="{Binding Path=ParkFeesValue}" />
-                <DataGridTextColumn Header="Status" Width="200" Binding="{Binding Path=ParkFeesValue}" />
-                <DataGridTemplateColumn Width="100" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="btnAvtivity" Content="edit" Width="40"  Command=""  />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Slot Id" Width="60"  Binding="{Binding Path=par_slot_id}" />
+                <DataGridTextColumn Header="Nomor" Width="70"  Binding="{Binding Path=area_number}"  />
+                <DataGridTextColumn Header="No Kategori" Width="130"  Binding="{Binding Path=kat_number}"  />
+                <DataGridTextColumn Header="Katgeori" Width="90"  Binding="{Binding Path=kat_area_name}"  />
+                <DataGridTextColumn Header="Tarif /jam" Width="100"  />
+                <DataGridTextColumn Header="Pengguna" Width="100" Binding="{Binding Path=user_username}" />
+                <DataGridTextColumn Header="Status" Width="40" Binding="{Binding Path=park_slot_status}" />
+                
             </DataGrid.Columns>
         </DataGrid>
 

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel.Slot;
 
 namespace WpfApp1.views
 {
@@ -20,9 +21,12 @@ namespace WpfApp1.views
     /// </summary>
     public partial class ParkingSlot : Page
     {
+        private SlotViewModels _slotvm;
         public ParkingSlot()
         {
             InitializeComponent();
+            _slotvm = new SlotViewModels();
+            this.DataContext = _slotvm;
         }
     }
 }
