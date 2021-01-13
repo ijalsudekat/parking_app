@@ -19,7 +19,9 @@ namespace WpfApp1.Services
         public List<SlotModel> GetFilter(string id)
         {
 
-            var client = new RestClient("http://localhost:5000/api/data-slot/"+id);
+            var url = String.Format("http://localhost:5000/api/data-slot/{0}", id);
+
+            var client = new RestClient(url);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
@@ -30,7 +32,11 @@ namespace WpfApp1.Services
             {
                 JObject o = JObject.Parse(response.Content);
 
+               
+
                 JArray a = (JArray)o["data"];
+
+                Console.WriteLine(a);
 
                 List<SlotModel> person = a.ToObject<List<SlotModel>>();
 

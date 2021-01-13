@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-      xmlns:cvm="clr-namespace:WpfApp1.ViewModel.Area"
+      xmlns:cvm="clr-namespace:WpfApp1.ViewModel.History"
       xmlns:cvt="clr-namespace:WpfApp1.converters"
       xmlns:local="clr-namespace:WpfApp1.views"
       mc:Ignorable="d" 
@@ -74,7 +74,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <cvm:AreavIewModels x:Key="cvm_area"/>
+        <cvm:HistoryViewModel x:Key="cvm_hist"/>
         <cvt:BooleanToVisibilityConverter x:Key="cvt_alert"/>
     </Page.Resources>
     <Grid Margin="5" >
@@ -133,22 +133,22 @@
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
-                  CanUserResizeColumns="False"
-                  ItemsSource="{Binding HistoryList}" BorderBrush="{x:Null}"
+                  CanUserResizeColumns="True"
+                  ItemsSource="{Binding Path=HistoryList}" BorderBrush="{x:Null}"
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
                  
-                  IsSynchronizedWithCurrentItem="True" Height="25" >
+                  IsSynchronizedWithCurrentItem="True"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Kode History" Width="100"  Binding="{Binding hist_kode}" />
-                <DataGridTextColumn Header="nomor" Width="60"  Binding="{Binding area_number}"  />
-                <DataGridTextColumn Header="no kategori" Width="80" Binding="{Binding kat_number}" />
-                <DataGridTextColumn Header="kategori" Width="100" Binding="{Binding kat_area_number}"/>
-                <DataGridTextColumn Header="User fullname" Binding="{Binding user_fullname}"/>
-                <DataGridTextColumn Header="Masuk" Width="100" Binding="{Binding hist_in}" />
-                <DataGridTextColumn Header="Keluar" Width="100" Binding="{Binding hist_out}" />
-                <DataGridTextColumn Header="Status" Width="60" Binding="{Binding hist_sts}" />
-                <DataGridTextColumn Header="Created at" Width="100" Binding="{Binding hist_created_atd}" />
+                <DataGridTextColumn Header="Kode History" Width="100"  Binding="{Binding Path=hist_kode}" />
+                <DataGridTextColumn Header="nomor" Width="60"  Binding="{Binding Path=area_number}"  />
+                <DataGridTextColumn Header="no kategori" Width="80" Binding="{Binding Path=kat_number}" />
+                <DataGridTextColumn Header="kategori" Width="100" Binding="{Binding Path=kat_area_name}"/>
+                <DataGridTextColumn Header="User fullname" Binding="{Binding Path=user_fullname}"/>
+                <DataGridTextColumn Header="Masuk" Width="100" Binding="{Binding Path=hist_in}" />
+                <DataGridTextColumn Header="Keluar" Width="100" Binding="{Binding Path=hist_out}" />
+                <DataGridTextColumn Header="Status" Width="60" Binding="{Binding Path=hist_sts}" />
+                <DataGridTextColumn Header="Created at" Width="100" Binding="{Binding Path=hist_created_atd}" />
             </DataGrid.Columns>
         </DataGrid>
 

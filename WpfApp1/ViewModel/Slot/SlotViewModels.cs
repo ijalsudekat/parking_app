@@ -58,13 +58,9 @@ namespace WpfApp1.ViewModel.Slot
 
         private void FilterSlot(object op)
         {
-            Console.WriteLine("testtt");
-            if (!String.IsNullOrEmpty(Filter))
-            {
-                SlotList = new ObservableCollection<SlotModel>(_services.GetFilter(Filter));
-            }
-                   
-            SlotList = (ObservableCollection<SlotModel>)op;
+            
+         SlotList = new ObservableCollection<SlotModel>(_services.GetFilter(Filter));
+         
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

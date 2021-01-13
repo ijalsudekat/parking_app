@@ -155,7 +155,7 @@
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
-                  CanUserResizeColumns="False"
+                  CanUserResizeColumns="True"
                   ItemsSource="{Binding  Path=AreaData}" BorderBrush="{x:Null}"
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"

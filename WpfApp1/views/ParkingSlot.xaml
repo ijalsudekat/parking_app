@@ -131,7 +131,7 @@
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
                   
-                  IsSynchronizedWithCurrentItem="True" Height="25" >
+                  IsSynchronizedWithCurrentItem="True"  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Slot Id" Width="60"  Binding="{Binding par_slot_id}" />
                 <DataGridTextColumn Header="Nomor" Width="70"  Binding="{Binding area_number}"  />
@@ -139,7 +139,7 @@
                 <DataGridTextColumn Header="Katgeori" Width="90"  Binding="{Binding kat_area_name}"  />
                 <DataGridTextColumn Header="Tarif /jam" Width="100"  />
                 <DataGridTextColumn Header="Pengguna" Width="100" Binding="{Binding user_username}" />
-                <DataGridTextColumn Header="Status" Width="40" Binding="{Binding park_slot_status}" />
+                <DataGridTextColumn Header="Status" Width="100" Binding="{Binding park_slot_status}" />
                 
             </DataGrid.Columns>
         </DataGrid>

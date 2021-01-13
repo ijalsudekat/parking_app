@@ -56,6 +56,15 @@ namespace WpfApp1.Models
             set { _area_number = value; }
         }
 
+        private int _kat_number;
+
+        public int kat_number
+        {
+            get { return _kat_number; }
+            set { _kat_number = value; }
+        }
+
+
         private string _kat_area_name;
 
         public string kat_area_name

@@ -58,12 +58,10 @@ namespace WpfApp1.ViewModel.History
 
         private void FilterHist(object op)
         {
-            if (!String.IsNullOrEmpty(Filter))
-            {
-                HistoryList = new ObservableCollection<HistoryModels>(_services.GetFilter(Filter));
-            }
 
-            HistoryList = (ObservableCollection<HistoryModels>)op;
+            HistoryList = new ObservableCollection<HistoryModels>(_services.GetFilter(Filter));
+           
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

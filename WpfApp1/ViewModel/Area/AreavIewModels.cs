@@ -30,9 +30,9 @@ namespace WpfApp1.ViewModel.Area
         KategoriServices _katservice = new KategoriServices();
         public AreavIewModels()
         {
-            //getdata();
-            //LoadFees();
-            //LoadKategori();
+            getdata();
+            LoadFees();
+            LoadKategori();
         }
         #endregion
 
