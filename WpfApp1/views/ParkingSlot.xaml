@@ -117,7 +117,7 @@
             <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" Command="{Binding Filtercommand}" CommandParameter="{Binding SlotList}" />
         </Grid>
        
-        <DataGrid x:Name="dgAreas" 
+        <DataGrid x:Name="dgSlot" 
                   Grid.Row="3"
                   Grid.Column="1"
                   AutoGenerateColumns="False"
@@ -127,19 +127,19 @@
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
                   CanUserResizeColumns="False"
-                  ItemsSource="{Binding  Path=SlotList}" BorderBrush="{x:Null}"
+                  ItemsSource="{Binding SlotList}" BorderBrush="{x:Null}"
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
                   
                   IsSynchronizedWithCurrentItem="True" Height="25" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Slot Id" Width="60"  Binding="{Binding Path=par_slot_id}" />
-                <DataGridTextColumn Header="Nomor" Width="70"  Binding="{Binding Path=area_number}"  />
-                <DataGridTextColumn Header="No Kategori" Width="130"  Binding="{Binding Path=kat_number}"  />
-                <DataGridTextColumn Header="Katgeori" Width="90"  Binding="{Binding Path=kat_area_name}"  />
+                <DataGridTextColumn Header="Slot Id" Width="60"  Binding="{Binding par_slot_id}" />
+                <DataGridTextColumn Header="Nomor" Width="70"  Binding="{Binding area_number}"  />
+                <DataGridTextColumn Header="No Kategori" Width="130"  Binding="{Binding kat_number}"  />
+                <DataGridTextColumn Header="Katgeori" Width="90"  Binding="{Binding kat_area_name}"  />
                 <DataGridTextColumn Header="Tarif /jam" Width="100"  />
-                <DataGridTextColumn Header="Pengguna" Width="100" Binding="{Binding Path=user_username}" />
-                <DataGridTextColumn Header="Status" Width="40" Binding="{Binding Path=park_slot_status}" />
+                <DataGridTextColumn Header="Pengguna" Width="100" Binding="{Binding user_username}" />
+                <DataGridTextColumn Header="Status" Width="40" Binding="{Binding park_slot_status}" />
                 
             </DataGrid.Columns>
         </DataGrid>

@@ -10,30 +10,30 @@ using System.Windows.Input;
 using WpfApp1.Models;
 using WpfApp1.Services;
 
-namespace WpfApp1.ViewModel.Slot
+namespace WpfApp1.ViewModel.History
 {
-    public class SlotViewModels : INotifyPropertyChanged
+    public class HistoryViewModel : INotifyPropertyChanged
     {
-        public SlotModel slotmodel = new SlotModel();
-        public SlotService _services = new SlotService();
-        public SlotViewModels()
+        public HistoryModels slotmodel = new HistoryModels();
+        public HistroryServices _services = new HistroryServices();
+
+        public HistoryViewModel()
         {
-            getSlotData();
+            getHistoryData();
         }
 
-        private ObservableCollection<SlotModel> slotModel;
+        private ObservableCollection<HistoryModels> _hitory;
 
-        public ObservableCollection<SlotModel> SlotList
+        public ObservableCollection<HistoryModels> HistoryList
         {
-            get { return slotModel; }
-            set { slotModel = value; OnPropertyChanged("Slotlist"); }
+            get { return _hitory; }
+            set { _hitory = value; OnPropertyChanged("HistoryList"); }
         }
 
 
-        public void getSlotData()
+        public void getHistoryData()
         {
-            SlotList = new ObservableCollection<SlotModel>(_services.GetAll());
-           
+            HistoryList = new ObservableCollection<HistoryModels>(_services.GetAll());
         }
 
         private string _filter;
@@ -51,20 +51,19 @@ namespace WpfApp1.ViewModel.Slot
             get
             {
                 if (filtercommand == null)
-                    filtercommand = new RelayCommand<object>(FilterSlot);
+                    filtercommand = new RelayCommand<object>(FilterHist);
                 return filtercommand;
             }
         }
 
-        private void FilterSlot(object op)
+        private void FilterHist(object op)
         {
-            Console.WriteLine("testtt");
             if (!String.IsNullOrEmpty(Filter))
             {
-                SlotList = new ObservableCollection<SlotModel>(_services.GetFilter(Filter));
+                HistoryList = new ObservableCollection<HistoryModels>(_services.GetFilter(Filter));
             }
-                   
-            SlotList = (ObservableCollection<SlotModel>)op;
+
+            HistoryList = (ObservableCollection<HistoryModels>)op;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

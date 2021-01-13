@@ -27,6 +27,7 @@ namespace WpfApp1.views
             InitializeComponent();
             _slotvm = new SlotViewModels();
             this.DataContext = _slotvm;
+            dgSlot.ItemsSource = _slotvm.SlotList;
         }
     }
 }

@@ -36,19 +36,19 @@ namespace WpfApp1.ViewModel
             user.UserPassword = username;
             user.UserPassword = password;
 
-            //var a_data = _services.LogedIn(username, password);
-            //if (a_data != null)
-            //{
-            //    string result = Path.GetTempPath();
-            //    string folder = result;
-            //    string fileName = "PkSetting.txt";
-            //    string fullpath = folder + fileName;
-            //    string[] json = { a_data };
-            //    File.WriteAllLines(fullpath, json);
-            //    Console.WriteLine(result);
-            //    return true;
-            //}
-            return true;
+            var a_data = _services.LogedIn(username, password);
+            if (a_data != null)
+            {
+                string result = Path.GetTempPath();
+                string folder = result;
+                string fileName = "PkSetting.txt";
+                string fullpath = folder + fileName;
+                string[] json = { a_data };
+                File.WriteAllLines(fullpath, json);
+                Console.WriteLine(result);
+                return true;
+            }
+            return false;
         }
     }
 }

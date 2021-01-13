@@ -9,17 +9,13 @@ using WpfApp1.Models;
 
 namespace WpfApp1.Services
 {
-    public class SlotService
+    public class HistroryServices
     {
 
-        public SlotService()
-        {
-        }
-
-        public List<SlotModel> GetFilter(string id)
+        public List<HistoryModels> GetFilter(string id)
         {
 
-            var client = new RestClient("http://localhost:5000/api/data-slot/"+id);
+            var client = new RestClient("http://localhost:5000/api/data-history/" + id);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
@@ -32,20 +28,22 @@ namespace WpfApp1.Services
 
                 JArray a = (JArray)o["data"];
 
-                List<SlotModel> person = a.ToObject<List<SlotModel>>();
+                List<HistoryModels> person = a.ToObject<List<HistoryModels>>();
+
+                Console.WriteLine(person);
 
                 return person;
             }
             else
             {
-                return new List<SlotModel>();
+                return new List<HistoryModels>();
             }
         }
 
-        public List<SlotModel> GetAll()
+        public List<HistoryModels> GetAll()
         {
 
-            var client = new RestClient("http://localhost:5000/api/data-slot");
+            var client = new RestClient("http://localhost:5000/api/data-history");
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
@@ -58,14 +56,13 @@ namespace WpfApp1.Services
 
                 JArray a = (JArray)o["data"];
 
-                List<SlotModel> person = a.ToObject<List<SlotModel>>();
+                List<HistoryModels> person = a.ToObject<List<HistoryModels>>();
 
-                
                 return person;
             }
             else
             {
-                return new List<SlotModel>();
+                return new List<HistoryModels>();
             }
         }
 

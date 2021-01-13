@@ -70,8 +70,6 @@ namespace WpfApp1.Models
             set { parkFessId = value; }
         }
 
-
-
         private string kategori;
 
         [JsonProperty("kategori")]

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel.History;
 
 namespace WpfApp1.views
 {
@@ -20,9 +21,13 @@ namespace WpfApp1.views
     /// </summary>
     public partial class HistoryView : Page
     {
+        public HistoryViewModel HistoryViewModel;
         public HistoryView()
         {
             InitializeComponent();
+            HistoryViewModel = new HistoryViewModel();
+            this.DataContext = HistoryViewModel;
+            
         }
     }
 }

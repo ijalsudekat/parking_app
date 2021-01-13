@@ -356,6 +356,7 @@
     <Compile Include="Interface\IClosable.cs" />
     <Compile Include="Models\AreaModels.cs" />
     <Compile Include="Models\FeesModel.cs" />
+    <Compile Include="Models\HistoryModels.cs" />
     <Compile Include="Models\KategoriModels.cs" />
     <Compile Include="Models\ScannerModel.cs" />
     <Compile Include="Models\SelectedFeesModel.cs" />
@@ -365,6 +366,7 @@
     <Compile Include="Services\AuthServices.cs" />
     <Compile Include="Services\FeesServices.cs" />
     <Compile Include="Services\GetToken.cs" />
+    <Compile Include="Services\HistroryServices.cs" />
     <Compile Include="Services\KategoriServices.cs" />
     <Compile Include="Services\MainServices.cs" />
     <Compile Include="Services\ScannerServices.cs" />
@@ -373,6 +375,7 @@
     <Compile Include="ViewModel\Area\AreavIewModels.cs" />
     <Compile Include="ViewModel\Area\EditAreaViewModels.cs" />
     <Compile Include="ViewModel\AuthViewModels.cs" />
+    <Compile Include="ViewModel\History\HistoryViewModel.cs" />
     <Compile Include="ViewModel\Scanner\GenerateViewModel.cs" />
     <Compile Include="ViewModel\Scanner\ScannerViewModel.cs" />
     <Compile Include="ViewModel\Slot\SlotViewModels.cs" />
