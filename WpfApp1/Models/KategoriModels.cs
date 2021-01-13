@@ -28,6 +28,14 @@ namespace WpfApp1.Models
             set { _kathall = value; }
         }
 
+        private int _katareanumber;
 
+        public int katNumber
+        {
+            get { return _katareanumber; }
+            set { _katareanumber = value; }
+        }
+
+       
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel.Kategori;
 
 namespace WpfApp1.views
 {
@@ -20,9 +21,12 @@ namespace WpfApp1.views
     /// </summary>
     public partial class KategoriView : Page
     {
+        private KatViewModels KatViewModels;  
         public KategoriView()
         {
             InitializeComponent();
+            KatViewModels = new KatViewModels();
+            this.DataContext = KatViewModels;
         }
     }
 }

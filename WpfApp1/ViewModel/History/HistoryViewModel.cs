@@ -30,6 +30,8 @@ namespace WpfApp1.ViewModel.History
             set { _hitory = value; OnPropertyChanged("HistoryList"); }
         }
 
+        
+
 
         public void getHistoryData()
         {
@@ -44,6 +46,7 @@ namespace WpfApp1.ViewModel.History
             set { _filter = value; OnPropertyChanged("Filter"); }
         }
 
+        #region data
 
         private ICommand filtercommand;
         public ICommand Filtercommand
@@ -73,6 +76,8 @@ namespace WpfApp1.ViewModel.History
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
 
     }
 }

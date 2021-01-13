@@ -101,7 +101,6 @@ namespace WpfApp1.ViewModel.Scanner
         }
 
         private string _message;
-
         public string Messages
         {
             get { return _message; }

@@ -30,6 +30,7 @@ namespace WpfApp1.Services
                 JObject o = JObject.Parse(response.Content);
                 JArray a = (JArray)o["data"];
                 List<KategoriModels> person = a.ToObject<List<KategoriModels>>();
+                Console.WriteLine(a);
                 return person;
             }
             else
@@ -38,5 +39,30 @@ namespace WpfApp1.Services
             }
         }
 
+        public List<KategoriModels> GetFillter(string filter)
+        {
+            var uri = String.Format("http://localhost:5000/api/data-kategori/sort/{0}", filter);
+            var client = new RestClient(uri);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
+            IRestResponse response = client.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                JObject o = JObject.Parse(response.Content);
+                JArray a = (JArray)o["data"];
+                List<KategoriModels> person = a.ToObject<List<KategoriModels>>();
+                Console.WriteLine(a);
+                return person;
+            }
+            else
+            {
+                return new List<KategoriModels>();
+            }
+        }
+
+      
     }
 }

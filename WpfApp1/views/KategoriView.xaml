@@ -4,11 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-      xmlns:local="clr-namespace:WpfApp1.views"
+      xmlns:local="clr-namespace:WpfApp1.ViewModel.Kategori"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      x:Name="root"
       Title="KategoriView">
-
+    <Page.Resources>
+        <local:KatViewModels x:Key="cvm_kat" />
+    </Page.Resources>
     <Grid Margin="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -50,13 +53,14 @@
                 <Run Text="Tambah data"  />
             </TextBlock>
             <Label Content="Kategori" Grid.Row="1" Grid.Column="0" FontSize="12" VerticalAlignment="Center" />
-            <TextBox x:Name="txtKategori" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Path=Ids}" x:Name="txtIds" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Path=Katname}" x:Name="txtKategori" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Center" />
             <Label Content="Nomor" Grid.Row="2" Grid.Column="0" FontSize="12" VerticalAlignment="Center" />
-            <TextBox x:Name="nomor" Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Center" />
+            <TextBox x:Name="nomor" Text="{Binding Path=Katnumber}" Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Center" />
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" >
-                <Button Width="60" Content="Simpan" />
+                <Button Width="60" Content="Simpan" CommandParameter="{Binding Kategosris}" Command="{Binding Path=Tambahdata}" />
                 <Label/>
-                <Button Width="40" Content="Edit"  />
+                <Button Width="40" Content="Edit" CommandParameter="{Binding Kategosris}" Command="{Binding Path=Editcommand}" />
             </StackPanel>
             <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
@@ -106,8 +110,8 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Search Data" Grid.Row="0" Grid.Column="0" />
-                <TextBox Name="txtFind" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
-                <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" />
+                <TextBox Name="txtFind" Text="{Binding Path=Filter, Mode=TwoWay}" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
+                <Button Width="60" Command="{Binding Path=Filtercommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" />
                 
             </Grid>
             <TextBlock
@@ -129,18 +133,26 @@
                   Margin="5,8,8,8"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  ItemsSource="{Binding Path=EmployeeList}"
+                  ItemsSource="{Binding Path=Kategosris}"
+                  SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True"
                   >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="No" Width="60" />
-                        <DataGridTextColumn Header="Kategori Name" Width="150"/>
-                        <DataGridTextColumn Header="Created at" Width="80"  />
-                        <DataGridTextColumn Header="Status" Width="120"  />
-
-                        <DataGridTemplateColumn Header="action" >
+                       
+                        <DataGridTextColumn Header="Kategori Name" Binding="{Binding Path=KategoriHall}" Width="150"/>
+                        <DataGridTextColumn Header="Kategori Number" Binding="{Binding Path=katNumber}" Width="150"/>
+                        
+                        <DataGridTemplateColumn Width="100" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="btnEdit" Content="edit" />
+                                    <Button x:Name="btnEdit" Content="edit" Width="40" CommandParameter="{Binding Path=KategoriId}" Command="{Binding Source={StaticResource cvm_kat}, Path=Editcommand}"  />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="100" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnDel" Content="hapus" Width="40" CommandParameter="{Binding Path=KategoriId}" Command="{Binding Source={StaticResource cvm_kat}, Path=Deletecommand}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
