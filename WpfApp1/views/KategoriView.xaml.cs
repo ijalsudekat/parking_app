@@ -28,5 +28,10 @@ namespace WpfApp1.views
             KatViewModels = new KatViewModels();
             this.DataContext = KatViewModels;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+          
+        }
     }
 }

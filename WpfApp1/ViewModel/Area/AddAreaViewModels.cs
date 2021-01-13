@@ -114,7 +114,7 @@ namespace WpfApp1.ViewModel.Area
         }
         async Task<bool> delayid()
         {
-            await Task.Delay(1000);
+            await Task.Delay(3000);
             return true;
         }
 

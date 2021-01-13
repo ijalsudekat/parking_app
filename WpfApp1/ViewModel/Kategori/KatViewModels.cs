@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Media;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,19 @@ namespace WpfApp1.ViewModel.Kategori
         public KatViewModels()
         {
             getataKat();
+            binenable = true;
+            Editnable = false;
+            Visibility = false ;
         }
+
+        private bool editnabled;
+
+        public bool Editnable
+        {
+            get { return editnabled; }
+            set { editnabled = value;OnPropertyChanged("Editnable"); }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string name)
@@ -83,17 +96,75 @@ namespace WpfApp1.ViewModel.Kategori
             }
         }
 
-        private void AddData(object obj)
+        private SolidColorBrush _color;
+
+        public SolidColorBrush Coloring
         {
+            get { return _color; }
+            set { _color = value; OnPropertyChanged("Coloring"); }
+        }
+
+        private bool _visibility;
+
+        public bool Visibility
+        {
+            get { return _visibility; }
+            set { _visibility = value;OnPropertyChanged("Visibility"); }
+        }
+
+        private string message;
+
+        public string Message
+        {
+            get { return message; }
+            set { message = value; OnPropertyChanged("Message"); }
+        }
+
+
+
+        private async void AddData(object obj)
+        {
+            
             _katmodel.KategoriHall = Katname;
             _katmodel.katNumber = Katnumber;
-            //var dataadd = _services.savedata(_katmodel);
-            Kategosris = (ObservableCollection<KategoriModels>)obj;
 
-            if (true)
+            if (String.IsNullOrEmpty(Katname) || String.IsNullOrEmpty(Katnumber.ToString()) )
             {
-                Kategosris.Add(new KategoriModels() { KategoriHall = Katname, katNumber = Katnumber });
+                Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                Visibility = true;
+                Message = " Input wajib di isi ";
+                var cs = await delayid();
+                if (cs)
+                    Visibility = false;
             }
+            else
+            {
+                var dataadd = _services.SaveData(_katmodel);
+
+                Kategosris = (ObservableCollection<KategoriModels>)obj;
+
+                if (dataadd)
+                {
+                    Kategosris.Add(new KategoriModels() { KategoriHall = Katname, katNumber = Katnumber });
+                    Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
+                    Visibility = true;
+                    Message = "data saveed";
+                    var cs = await delayid();
+                    if (cs)
+                        Visibility = false;
+                }
+                else
+                {
+                    Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                    Visibility = true;
+                    Message = "Save data failed";
+                    var cs = await delayid();
+                    if (cs)
+                        Visibility = false;
+                }
+            }
+
+            
         }
 
         private int _katnumber;
@@ -125,6 +196,33 @@ namespace WpfApp1.ViewModel.Kategori
             }
         }
 
+        private ICommand resetcommand;
+        public ICommand Resetcommand
+        {
+            get
+            {
+                if (resetcommand == null)
+                    resetcommand = new RelayCommand(Resetng);
+                return resetcommand;
+            }
+        }
+
+        private void Resetng()
+        {
+            binenable = true;
+            Editnable = false;
+            Katname = "";
+            Katnumber = 0;
+            Ids = 0;
+        }
+
+
+        async Task<bool> delayid()
+        {
+            await Task.Delay(3000);
+            return true;
+        }
+
         private KategoriModels _selectedItem;
 
         public KategoriModels SelectedItem
@@ -143,9 +241,26 @@ namespace WpfApp1.ViewModel.Kategori
 
         private void EditData(object obj)
         {
-            Console.WriteLine(SelectedItem.katNumber);
-           
+            binenable = false;
+            Editnable = true;
+            Katname = SelectedItem.KategoriHall;
+            Katnumber = SelectedItem.katNumber;
+            Ids = Convert.ToInt32(obj);
         }
+
+        private bool _enabled;
+
+        public bool binenable
+        {
+            get { return _enabled; }
+            set { _enabled = value; OnPropertyChanged("binenable"); }
+        }
+
+
         #endregion
+
+        
+
+
     }
 }

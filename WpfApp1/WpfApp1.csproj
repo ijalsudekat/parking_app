@@ -377,6 +377,7 @@
     <Compile Include="ViewModel\AuthViewModels.cs" />
     <Compile Include="ViewModel\History\HistoryViewModel.cs" />
     <Compile Include="ViewModel\Kategori\KatViewModels.cs" />
+    <Compile Include="ViewModel\Kategori\Reseting.cs" />
     <Compile Include="ViewModel\Scanner\GenerateViewModel.cs" />
     <Compile Include="ViewModel\Scanner\ScannerViewModel.cs" />
     <Compile Include="ViewModel\Slot\SlotViewModels.cs" />
