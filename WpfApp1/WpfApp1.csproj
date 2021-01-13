@@ -361,6 +361,7 @@
     <Compile Include="Models\ScannerModel.cs" />
     <Compile Include="Models\SelectedFeesModel.cs" />
     <Compile Include="Models\SlotModel.cs" />
+    <Compile Include="Models\UserModeling.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Services\AreaServices.cs" />
     <Compile Include="Services\AuthServices.cs" />
@@ -371,6 +372,7 @@
     <Compile Include="Services\MainServices.cs" />
     <Compile Include="Services\ScannerServices.cs" />
     <Compile Include="Services\SlotService.cs" />
+    <Compile Include="Services\UserServides.cs" />
     <Compile Include="ViewModel\Area\AddAreaViewModels.cs" />
     <Compile Include="ViewModel\Area\AreavIewModels.cs" />
     <Compile Include="ViewModel\Area\EditAreaViewModels.cs" />
@@ -381,6 +383,8 @@
     <Compile Include="ViewModel\Scanner\GenerateViewModel.cs" />
     <Compile Include="ViewModel\Scanner\ScannerViewModel.cs" />
     <Compile Include="ViewModel\Slot\SlotViewModels.cs" />
+    <Compile Include="ViewModel\Users\UserActivityViewModel,cs.cs" />
+    <Compile Include="ViewModel\Users\UserViewModels.cs" />
     <Compile Include="views\AreaEditWindow.xaml.cs">
       <DependentUpon>AreaEditWindow.xaml</DependentUpon>
     </Compile>

@@ -30,9 +30,6 @@ namespace WpfApp1.ViewModel.History
             set { _hitory = value; OnPropertyChanged("HistoryList"); }
         }
 
-        
-
-
         public void getHistoryData()
         {
             HistoryList = new ObservableCollection<HistoryModels>(_services.GetAll());

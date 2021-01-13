@@ -56,19 +56,20 @@ namespace WpfApp1.Services
             });
 
             var response = client.Post(request);
-            Console.WriteLine(response.Content);
+            
             var oke = response.StatusCode.ToString();
             JObject o = JObject.Parse(response.Content);
             if (oke == "Created")
             {
+
                 bo.Add("el", o["alert"].ToString());
-                bo.Add("df", 1.ToString());
+                bo.Add("df", "1");
                 return bo ;
             }
             else
             {
                 bo.Add("el", o["alert"].ToString());
-                bo.Add("df", 0.ToString());
+                bo.Add("df", "0");
                 return bo;
             }
         }
@@ -91,21 +92,34 @@ namespace WpfApp1.Services
             var response = client.Put(request);
            
             var oke = response.StatusCode.ToString();
-            Console.WriteLine(oke);
+            
          
             if (oke == "OK")
             {
-                
                 JObject o = JObject.Parse(response.Content);
-                bo.Add("el", o["alert"].ToString());
-                bo.Add("df", 1.ToString());
+                if (Convert.ToInt32(o["state"]) == 1)
+                {
+                    bo.Add("el", o["alert"].ToString());
+                    bo.Add("df", "1");
+                    
+                }
+                else if (Convert.ToInt32(o["state"]) == 2)
+                {
+                    bo.Add("el", o["alert"].ToString());
+                    bo.Add("df", "0");
+                   
+                }else if(Convert.ToInt32(o["state"]) == 0){
+                    bo.Add("el", o["alert"].ToString());
+                    bo.Add("df", "0");
+                    
+                }
                 return bo;
             }
             else
             {
                 JObject o = JObject.Parse(response.Content);
-                bo.Add("el", o["alert"].ToString());
-                bo.Add("df", 0.ToString());
+                bo.Add("el","failed to save data");
+                bo.Add("df", "0");
                 return bo;
             }
         }
@@ -120,7 +134,6 @@ namespace WpfApp1.Services
             request.AddHeader("content-type", "application/json");
             request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
             IRestResponse response = client.Execute(request);
-
             if (response.IsSuccessful)
             {
                 JObject o = JObject.Parse(response.Content);
@@ -135,18 +148,27 @@ namespace WpfApp1.Services
             }
         }
 
-        public bool deleteData(int id)
+        public Dictionary<string, string> deleteData(int id)
         {
             var client = new RestClient(String.Format("http://localhost:5000/api/data-kategori/{0}", id));
             var request = new RestRequest(Method.DELETE);
             request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
             IRestResponse response = client.Execute(request);
+            Dictionary<string, string> bo = new Dictionary<string, string>();
+
             JObject o = JObject.Parse(response.Content);
-            if ((string)o["alert"] == "sukses")
+            Console.WriteLine(response.Content);
+            if (Convert.ToInt32(o["state"]) == 1)
             {
-                return true;
+                bo.Add("el", o["alert"].ToString());
+                bo.Add("df", o["state"].ToString());
             }
-            return false;
+            else if(Convert.ToInt32(o["state"]) == 0)
+            {
+                bo.Add("el", o["alert"].ToString());
+                bo.Add("df", o["state"].ToString());
+            }
+            return bo;
         }
 
       

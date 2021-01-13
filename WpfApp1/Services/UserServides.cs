@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,13 @@ using WpfApp1.Models;
 
 namespace WpfApp1.Services
 {
-    public class HistroryServices
+    public class UserServides
     {
-
-        public List<HistoryModels> GetFilter(string id)
+       
+      
+        public List<HistoryModels> Activity(int id)
         {
-
-            var client = new RestClient("http://localhost:5000/api/data-history/" + id);
+            var client = new RestClient("http://localhost:5000/api/auth/data-user-activity/" + id);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
@@ -25,9 +26,13 @@ namespace WpfApp1.Services
             if (response.IsSuccessful)
             {
                 JObject o = JObject.Parse(response.Content);
+
                 JArray a = (JArray)o["data"];
+
                 List<HistoryModels> person = a.ToObject<List<HistoryModels>>();
+
                 Console.WriteLine(person);
+
                 return person;
             }
             else
@@ -36,32 +41,30 @@ namespace WpfApp1.Services
             }
         }
 
-        public List<HistoryModels> GetAll()
+        public List<UserModeling> GetAll()
         {
-
-            var client = new RestClient("http://localhost:5000/api/data-history");
+            var client = new RestClient("http://localhost:5000/api/auth/data-user-activity");
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
             request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
             IRestResponse response = client.Execute(request);
-
+            Console.WriteLine(response.Content);
             if (response.IsSuccessful)
             {
                 JObject o = JObject.Parse(response.Content);
 
                 JArray a = (JArray)o["data"];
 
-                List<HistoryModels> person = a.ToObject<List<HistoryModels>>();
+                List<UserModeling> person = a.ToObject<List<UserModeling>>();
 
                 return person;
             }
             else
             {
-                return new List<HistoryModels>();
+                return new List<UserModeling>();
             }
         }
-
 
     }
 }

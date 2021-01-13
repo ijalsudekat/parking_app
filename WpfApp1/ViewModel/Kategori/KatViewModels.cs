@@ -145,7 +145,7 @@ namespace WpfApp1.ViewModel.Kategori
 
                 Kategosris = (ObservableCollection<KategoriModels>)obj;
 
-                if (dataadd["df"] != "0" )
+                if (dataadd["df"] == "0" )
                 {
                     Kategosris.Add(new KategoriModels() { KategoriHall = Katname, katNumber = Katnumber });
                     Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
@@ -232,18 +232,19 @@ namespace WpfApp1.ViewModel.Kategori
             if (confirm == DialogResult.Yes)
             {
                 var data = _services.deleteData(SelectedItem.KategoriId);
-                if (data)
+                if (data["df"] == "1" )
                 {
+                    getataKat();
                     Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
                     Visibility = true;
-                    Message = "Delete Data successfull";
+                    Message = data["el"] ;
 
                 }
                 else
                 {
                     Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
                     Visibility = true;
-                    Message = "Delete data failed";
+                    Message = data["el"];
                 }
             }
 

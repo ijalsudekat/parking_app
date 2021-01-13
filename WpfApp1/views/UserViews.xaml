@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:WpfApp1.views" xmlns:cvt="clr-namespace:WpfApp1.converters" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:cvm="clr-namespace:WpfApp1.ViewModel.Area"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:cbm="clr-namespace:WpfApp1.ViewModel.Users"
       Title="UserViews">
 
     <Page.Resources>
@@ -71,7 +72,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <cvm:AreavIewModels x:Key="cvm_area"/>
+        <cbm:UserViewModels x:Key="cvm_user"/>
         <cvt:BooleanToVisibilityConverter x:Key="cvt_alert"/>
     </Page.Resources>
     <Grid Margin="5" >
@@ -84,7 +85,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition />
-            <ColumnDefinition Width="297.6" />
+            <ColumnDefinition Width="500.6" />
         </Grid.ColumnDefinitions>
         <TextBlock
                 VerticalAlignment="Center"
@@ -116,19 +117,7 @@
             <TextBox Name="txtFind" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
             <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" />
         </Grid>
-        <StackPanel
-                VerticalAlignment="Center"
-                Background="{Binding Source={StaticResource cvm_area}, Path=Coloring}"
-                Visibility="{Binding  Source={StaticResource cvm_area}, Path=Visibility, Converter={StaticResource cvt_alert}}"
-                Orientation="Horizontal"
-                Grid.Row="3"
-                Grid.Column="1"
-                Width="Auto"
-                HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Height="0" Margin="0,151.2,104.4,152" 
-                >
-            <iconPacks:PackIconMaterialLight Name="ikonsa" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="White" />
-            <Label Content="{Binding  Source={StaticResource cvm_area}, Path=Message }" Foreground="White" Margin="10,0,0,0" />
-        </StackPanel>
+       
         <DataGrid x:Name="dgAreas" 
                   Grid.Row="3"
                   Grid.Column="1"
@@ -139,24 +128,68 @@
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
                   CanUserResizeColumns="False"
-                  ItemsSource="{Binding  Path=AreaData}" BorderBrush="{x:Null}"
+                  ItemsSource="{Binding Source={StaticResource cvm_user}, Path=UserList}" BorderBrush="{x:Null}"
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
-                  SelectedItem="{Binding Source={StaticResource cvm_area}, Path=SelectArea, Mode=TwoWay}"
-                  IsSynchronizedWithCurrentItem="True" Height="25" >
+                 SelectedItem="{Binding Source={StaticResource cvm_user}, Path=SelectedItem, Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Usernsme" Width="150"  Binding="{Binding Path=AreaNumber}" />
-                <DataGridTextColumn Header="Name" Width="130"  Binding="{Binding Path=Kategori}"  />
-                <DataGridTextColumn Header="Last Activity" Width="200" Binding="{Binding Path=ParkFeesValue}" />
+                <DataGridTextColumn Header="user id" Width="70" Binding="{Binding Path=user_id}" />
+                <DataGridTextColumn Header="Usernsme" Width="150"  Binding="{Binding Path=user_username}" />
+                <DataGridTextColumn Header="Name" Width="130"  Binding="{Binding Path=user_fullname}"  />
                 <DataGridTemplateColumn Width="100" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnAvtivity" Content="edit" Width="40"  Command=""  />
+                            <Button x:Name="btnAvtivity" Content="activty" Width="40"  Command="{Binding Source={StaticResource cvm_user}, Path=ActivityCommand}"  />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-       
+        <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="182*"/>
+                    <ColumnDefinition Width="115*"/>
+                    <ColumnDefinition Width="20*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0.2" >
+                    <iconPacks:PackIconFontAwesome Kind="HistorySolid" VerticalAlignment="Center" Width="40" />
+                    <Label Content="User Activity " FontSize="14"  VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.ColumnSpan="2" Margin="0,31,0,0.4" Grid.RowSpan="2" >
+
+                    <Label Content="user fullname" VerticalAlignment="Center" FontSize="14" />
+                    <Label Content=":" VerticalAlignment="Center" FontSize="14"  />
+                    <Label Content="{Binding Source={StaticResource cvm_user}, Path=SelectedItem.user_fullname}" VerticalAlignment="Center" FontSize="14"  Width="100" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,30.8,0,20.4"  >
+
+                    <Label Content="Last activity" VerticalAlignment="Center" FontSize="14" />
+                    <Label Content=":" VerticalAlignment="Center" FontSize="14"  />
+                    <Label Content="no data" VerticalAlignment="Center" FontSize="14"  Width="100" />
+                </StackPanel>
+                <ListView Grid.Row="3" Height="200" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvm_user}, Path=ActivityHisto}" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0.4" >
+                    <ListView.View>
+
+                        <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+
+                            <GridViewColumn  Header="Kode history" Width="80" DisplayMemberBinding="{Binding hist_kode}" />
+                            <GridViewColumn  Header="in" Width="50" DisplayMemberBinding="{Binding hist_in}" />
+                            <GridViewColumn  Header="out" Width="50" DisplayMemberBinding="{Binding hist_out}" />
+                            <GridViewColumn  Header="Activity date" Width="50" DisplayMemberBinding="{Binding hist_created_atd}" />
+                        </GridView>
+
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

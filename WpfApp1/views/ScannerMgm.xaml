@@ -50,7 +50,7 @@
                     <Label FontSize="14" HorizontalAlignment="Left">
                         <TextBlock TextDecorations="Underline">License Number</TextBlock>
                     </Label>
-                    <Label Content="ABC 80009 YH" FontSize="30" VerticalContentAlignment="Center" />
+                    <Label Content="{Binding License, Mode=TwoWay}" FontSize="27" VerticalContentAlignment="Center" />
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="2" Grid.Column="1" >
