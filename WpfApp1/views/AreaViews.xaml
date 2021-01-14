@@ -72,7 +72,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <cvm:AreavIewModels x:Key="cvm_area"/>
+        <!--<cvm:AreavIewModels x:Key="cvm_area"/>-->
         <cvt:BooleanToVisibilityConverter x:Key="cvt_alert"/>
     </Page.Resources>
     <Grid Margin="5" >
@@ -116,8 +116,8 @@
             </Grid.RowDefinitions>
            
             <Label Content="Search Data" Grid.Row="0" Grid.Column="0" />
-            <TextBox Name="txtFind" Text="{Binding Source={StaticResource cvm_area},Path=Filter, Mode=TwoWay}" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
-            <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" Command="{Binding Source={StaticResource cvm_area}, Path=Filterdata}" CommandParameter="{Binding Source={StaticResource cvm_area}, Path=AreaData, Mode=TwoWay}" />
+            <TextBox Name="txtFind" Text="{Binding Path=Filter, Mode=TwoWay}" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
+            <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" Command="{Binding Path=Filterdata}" CommandParameter="{Binding  Path=AreaData, Mode=TwoWay}" />
             <Button Width="60" Margin="10,0,0,0" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Content="Add data" Command="{Binding AddDataCommand}"/>
         </Grid>
         <TextBlock
@@ -132,8 +132,8 @@
         </TextBlock>
         <StackPanel
                 VerticalAlignment="Center"
-                Background="{Binding Source={StaticResource cvm_area}, Path=Coloring}"
-                Visibility="{Binding  Source={StaticResource cvm_area}, Path=Visibility, Converter={StaticResource cvt_alert}}"
+                Background="{Binding  Path=Coloring}"
+                Visibility="{Binding   Path=Visibility, Converter={StaticResource cvt_alert}}"
                 Orientation="Horizontal"
                 Grid.Row="3"
                 Grid.Column="1"
@@ -141,7 +141,7 @@
                 HorizontalAlignment="Stretch" 
                 >
                 <iconPacks:PackIconMaterialLight Name="ikonsa" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="White" />
-            <Label Content="{Binding  Source={StaticResource cvm_area}, Path=Message }" Foreground="White" Margin="10,0,0,0" />
+            <Label Content="{Binding  Path=Message }" Foreground="White" Margin="10,0,0,0" />
         </StackPanel>
 
         <Grid Grid.Row="4" Grid.Column="1" >
@@ -154,10 +154,10 @@
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="All"
                   CanUserResizeColumns="False"
-                  ItemsSource="{Binding Source={StaticResource cvm_area}, Path=AreaData, Mode=TwoWay}" 
+                  ItemsSource="{Binding  Path=AreaData, Mode=TwoWay}" 
                   EnableRowVirtualization="False" 
                   RowHeight="30" VerticalAlignment="Top" 
-                  SelectedItem="{Binding Source={StaticResource cvm_area}, Path=SelectArea, Mode=TwoWay}"
+                  SelectedItem="{Binding Path=SelectArea, Mode=TwoWay}"
                   IsSynchronizedWithCurrentItem="True" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Area Number" Width="150"  Binding="{Binding Path=AreaNumber}" />
@@ -177,14 +177,16 @@
                     <DataGridTemplateColumn Width="70" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnEdit" Content="edit" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=EditAreaCommand}"  />
+                                <Button x:Name="btnEdit" Content="edit" Width="40"  Command="{Binding Path=DataContext.EditAreaCommand, RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}"  />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="70" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDel" Content="hapus" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=Deleteareacommand}" CommandParameter="{Binding Source={StaticResource cvm_area}, Path=AreaData}" />
+                                <Button x:Name="btnDel" Content="hapus" Width="40"  Command="{Binding Path=DataContext.Deleteareacommand , RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding Path=AreaId }" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

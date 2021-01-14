@@ -98,7 +98,7 @@ namespace WpfApp1.ViewModel.Area
                     var cs = await delayid();
                     if (cs)
                     {
-                        AreadeSave(new { },null);
+                        AreadeSave(saving,null);
                     }
                 }
                 else

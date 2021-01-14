@@ -96,7 +96,7 @@
             <ComboBox 
                   ItemsSource="{Binding Source={StaticResource vm_area}, Path=Kategoris, Mode=OneWay}" 
                   Style="{StaticResource cbcenter}" 
-                  SelectedItem="{Binding Path=Kamodel, Mode=TwoWay}"
+                  SelectedValue="{Binding Path=CurrentArea.KategoriId}"
                   Name="cbKat" 
                   >
                 <ComboBox.ItemTemplate>
@@ -117,7 +117,7 @@
                   Style="{StaticResource cbcenter}" 
                   ItemsSource="{Binding Source={StaticResource vm_area},Path=FeesModels, Mode=OneWay}"
                   DisplayMemberPath="FeesValue"
-                  SelectedItem="{Binding Path=Feesmodel, Mode=TwoWay}"
+                  SelectedValue="{Binding Path=CurrentArea.ParkFeesId, Mode=TwoWay}"
                   />
         </StackPanel>
 

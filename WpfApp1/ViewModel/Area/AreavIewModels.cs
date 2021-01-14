@@ -225,7 +225,7 @@ namespace WpfApp1.ViewModel.Area
 
         private void AddAreaDataWindow(object sender, EventArgs e)
         {
-            getdata();
+            AreaData.Add((AreaModel)sender);
             window.Close();
             
         }
@@ -297,15 +297,17 @@ namespace WpfApp1.ViewModel.Area
 
                 var ds =  ods.Where(vc => vc.hist_area_id.Equals(SelectArea.AreaId)).Count();
 
+               
+
                 if (ds < 1)
                 {
                     var data = _services.Delete(SelectArea.AreaId);
                     if (data)
                     {
 
-                        AreaData = new ObservableCollection<AreaModel>((IEnumerable<AreaModel>)obj);
-                        AreaData.Remove(SelectArea);
-                       
+                        var findes = AreaData.First(cv => cv.AreaId.Equals(Convert.ToInt32(obj)));
+                        AreaData.Remove(findes);
+
                         Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
                         Visibility = true;
                         Message = "Delete Data successfull";

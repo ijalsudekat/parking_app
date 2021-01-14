@@ -123,9 +123,11 @@ namespace WpfApp1.ViewModel.Area
 
         private async void Save()
         {
-           
-            CurrentArea.KategoriId = Kamodel.KategoriId;
-            CurrentArea.ParkFeesId = Feesmodel.ParkFeesId;
+
+         
+
+            //CurrentArea.KategoriId =  ? CurrentArea.KategoriId : Kamodel.KategoriId;
+            //CurrentArea.ParkFeesId = String.IsNullOrEmpty(Feesmodel.ParkFeesId.ToString())? CurrentArea.ParkFeesId : Feesmodel.ParkFeesId;
 
             if (String.IsNullOrEmpty(CurrentArea.AreaNumber.ToString())
                 || String.IsNullOrEmpty(CurrentArea.KategoriId.ToString())
