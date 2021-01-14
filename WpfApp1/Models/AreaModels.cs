@@ -79,6 +79,15 @@ namespace WpfApp1.Models
             set { kategori = value; }
         }
 
+        private int _katnumber;
+
+        [JsonProperty("katNumber")]
+        public int KatNumber
+        {
+            get { return _katnumber; }
+            set { _katnumber = value; }
+        }
+
         private DateTime createdAt;
 
         [JsonProperty("areaCreatedAt")]

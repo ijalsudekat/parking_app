@@ -30,7 +30,6 @@ namespace WpfApp1.Services
                 JObject o = JObject.Parse(response.Content);
                 JArray a = (JArray)o["data"];
                 List<KategoriModels> person = a.ToObject<List<KategoriModels>>();
-                Console.WriteLine(a);
                 return person;
             }
             else

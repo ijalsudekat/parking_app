@@ -42,14 +42,18 @@ namespace WpfApp1.ViewModel.Area
         public SolidColorBrush Coloring
         {
             get { return colorBrush; }
-            set { colorBrush = value; OnPropertyChanged("Coloring"); }
+            set { colorBrush = value; 
+                OnPropertyChanged("Coloring"); 
+            }
         }
 
         private string message;
         public string Message
         {
             get { return message; }
-            set { message = value; OnPropertyChanged("Message"); }
+            set { message = value; 
+                OnPropertyChanged("Message"); 
+            }
         }
 
         private bool visibility;
@@ -57,7 +61,9 @@ namespace WpfApp1.ViewModel.Area
         public bool Visibility
         {
             get { return visibility; }
-            set { visibility = value; OnPropertyChanged("Visibility"); }
+            set { visibility = value; 
+                OnPropertyChanged("Visibility"); 
+            }
         }
         #endregion
 
@@ -68,18 +74,61 @@ namespace WpfApp1.ViewModel.Area
         public AreaModel SelectArea
         {
             get { return selectArea; }
-            set { selectArea = value; OnPropertyChanged("SelectArea"); }
+            set { selectArea = value; 
+                OnPropertyChanged("SelectArea"); 
+            }
         }
 
         private ObservableCollection<AreaModel> areasData;
         public ObservableCollection<AreaModel> AreaData
         {
             get { return areasData; }
-            set { areasData = value; OnPropertyChanged("AreaData"); }
+            set { areasData = value; 
+                OnPropertyChanged("AreaData"); 
+            }
+        }
+
+        private string _filter;
+
+        public string Filter
+        {
+            get { return _filter; }
+            set { _filter = value;
+                OnPropertyChanged("Filter");
+            }
+        }
+
+
+        private ICommand filterdata;
+
+        public ICommand Filterdata
+        {
+            get
+            {
+                if (filterdata == null)
+                    filterdata = new RelayCommand<object>(filterdataq);
+                return filterdata;
+
+            }
+
+        }
+
+        public void filterdataq(object obj)
+        {
+
+            if (!String.IsNullOrEmpty(Filter))
+            {
+                AreaData = new ObservableCollection<AreaModel>(_services.GetFilter(Filter));
+            }
+            else
+            {
+              getdata();
+            }
         }
 
         public void getdata()
         {
+            Console.WriteLine("jalan");
             AreaData = new ObservableCollection<AreaModel>(_services.GetAll());
         }
         #endregion
@@ -134,9 +183,9 @@ namespace WpfApp1.ViewModel.Area
 
         private void EditAreaViewModelSaved(object sender, EventArgs e)
         {
+           
+            getdata();
             EditWindow.Close();
-
-
         }
 
         #endregion
@@ -176,8 +225,9 @@ namespace WpfApp1.ViewModel.Area
 
         private void AddAreaDataWindow(object sender, EventArgs e)
         {
+            getdata();
             window.Close();
-            AreaData.Add((AreaModel)sender);
+            
         }
 
         private void AddAreaWindowClosing(object sender, EventArgs e)
@@ -190,7 +240,8 @@ namespace WpfApp1.ViewModel.Area
         public List<FeesModel> FeesModels
         {
             get { return feesModel; }
-            set { feesModel = value; OnPropertyChanged("FeesModels"); }
+            set { feesModel = value; 
+                OnPropertyChanged("FeesModels"); }
         }
 
         public void LoadFees()
@@ -211,13 +262,12 @@ namespace WpfApp1.ViewModel.Area
 
         }
 
-    
-       
         private IEnumerable<KategoriModels> kategoris;
         public IEnumerable<KategoriModels> Kategoris
         {
             get { return kategoris; }
-            set { kategoris = value; OnPropertyChanged("kategoris"); }
+            set { kategoris = value; 
+                OnPropertyChanged("kategoris"); }
         }
         public void LoadKategori()
         {
@@ -232,32 +282,50 @@ namespace WpfApp1.ViewModel.Area
             get
             {
                 if (deleteareacommand == null)
-                    deleteareacommand = new RelayCommand(DeleteArea);
+                    deleteareacommand = new RelayCommand<object>(DeleteArea);
                 return deleteareacommand;
             }
         }
 
-        private void DeleteArea()
+        private void DeleteArea(object obj)
         {
             var confirm = MessageBox.Show(string.Format("this data {0} has ben deleted are you sure ?", SelectArea.AreaNumber), "Confirm", MessageBoxButtons.YesNo);
-           
+
             if (confirm == DialogResult.Yes)
             {
-                var data = _services.Delete(SelectArea.AreaId);
-                if (data)
+                ObservableCollection<HistoryModels> ods = new ObservableCollection<HistoryModels>(_services.GetHistory());
+
+                var ds =  ods.Where(vc => vc.hist_area_id.Equals(SelectArea.AreaId)).Count();
+
+                if (ds < 1)
                 {
-                    getdata();
-                    Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
-                    Visibility = true;
-                    Message = "Delete Data successfull";
-                    
+                    var data = _services.Delete(SelectArea.AreaId);
+                    if (data)
+                    {
+
+                        AreaData = new ObservableCollection<AreaModel>((IEnumerable<AreaModel>)obj);
+                        AreaData.Remove(SelectArea);
+                       
+                        Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
+                        Visibility = true;
+                        Message = "Delete Data successfull";
+
+                    }
+                    else
+                    {
+                        Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
+                        Visibility = true;
+                        Message = "Delete data failed";
+                    }
                 }
                 else
                 {
                     Coloring = new SolidColorBrush(Color.FromRgb(231, 76, 60));
                     Visibility = true;
-                    Message = "Delete data failed";
+                    Message = "Restricted action ! cannot delete this data";
                 }
+
+               
             }
         }
 

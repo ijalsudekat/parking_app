@@ -341,9 +341,11 @@ namespace WpfApp1.ViewModel.fees
 
                 FeesData = (ObservableCollection<FeesModel>)obj;
 
-                var cvd = FeesData.Where(cv => cv.FeesValue.Equals(FeesVal)).Count();
+                var cvd = FeesData.Where(cv => cv.FeesValue.ToString() == FeesVal).Count();
 
-                if (cvd <= 0)
+                Console.WriteLine(cvd);
+
+                if (cvd < 1)
                 {
                     var dataadd = _services.insertData(Convert.ToInt32(FeesVal));
                     if (dataadd)

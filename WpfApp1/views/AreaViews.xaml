@@ -106,20 +106,19 @@
             >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140" />
-                <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="80" />
                 <ColumnDefinition Width="70" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
-            <Label Content="Select data" Grid.Row="0" Grid.Column="0" />
-            <ComboBox Width="100" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" />
-            <Label Content="Search Data" Grid.Row="0" Grid.Column="1" />
-            <TextBox Name="txtFind" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="1" VerticalAlignment="Top"  />
-            <Button Width="60"  Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Content="Search" />
-            <Button Width="60" Margin="10,0,0,0" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Content="Add data" Command="{Binding AddDataCommand}"/>
+           
+            <Label Content="Search Data" Grid.Row="0" Grid.Column="0" />
+            <TextBox Name="txtFind" Text="{Binding Source={StaticResource cvm_area},Path=Filter, Mode=TwoWay}" Width="140" Height="20" Grid.Row="1" HorizontalAlignment="Left"  Grid.Column="0" VerticalAlignment="Top"  />
+            <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" Command="{Binding Source={StaticResource cvm_area}, Path=Filterdata}" CommandParameter="{Binding Source={StaticResource cvm_area}, Path=AreaData, Mode=TwoWay}" />
+            <Button Width="60" Margin="10,0,0,0" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Content="Add data" Command="{Binding AddDataCommand}"/>
         </Grid>
         <TextBlock
                 VerticalAlignment="Center"
@@ -145,42 +144,53 @@
             <Label Content="{Binding  Source={StaticResource cvm_area}, Path=Message }" Foreground="White" Margin="10,0,0,0" />
         </StackPanel>
 
-
-        <DataGrid x:Name="dgAreas" 
-                  Grid.Row="4"
-                  Grid.Column="1"
+        <Grid Grid.Row="4" Grid.Column="1" >
+            <DataGrid x:Name="dgAreas" 
+                 
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   Margin="5,8,8,8"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  HeadersVisibility="Column"
-                  CanUserResizeColumns="True"
-                  ItemsSource="{Binding  Path=AreaData}" BorderBrush="{x:Null}"
+                  HeadersVisibility="All"
+                  CanUserResizeColumns="False"
+                  ItemsSource="{Binding Source={StaticResource cvm_area}, Path=AreaData, Mode=TwoWay}" 
                   EnableRowVirtualization="False" 
-                  RowHeight="30" VerticalAlignment="Top" Background="{x:Null}"
+                  RowHeight="30" VerticalAlignment="Top" 
                   SelectedItem="{Binding Source={StaticResource cvm_area}, Path=SelectArea, Mode=TwoWay}"
                   IsSynchronizedWithCurrentItem="True" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Area Number" Width="150"  Binding="{Binding Path=AreaNumber}" />
-                <DataGridTextColumn Header="Area Hall" Width="130"  Binding="{Binding Path=Kategori}"  />
-                <DataGridTextColumn Header="Salaray per hour" Width="200" Binding="{Binding Path=ParkFeesValue}"  />
-                <DataGridTextColumn Header="Created at" Width="auto" Binding="{Binding Path=CreatedAt}"  />
-                <DataGridTemplateColumn Width="100" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="btnEdit" Content="edit" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=EditAreaCommand}"  />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="100" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="btnDel" Content="hapus" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=Deleteareacommand}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Area Number" Width="150"  Binding="{Binding Path=AreaNumber}" />
+                    <DataGridTemplateColumn Header="Kategori" Width="130"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,-5,0,0" >
+                                    <Label Content="{Binding Path=Kategori}" />
+                                    <Label Content="{Binding Path=KatNumber}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="Salaray per hour" Width="200" Binding="{Binding Path=ParkFeesValue}"  />
+                    <DataGridTextColumn Header="Created at" Width="auto" Binding="{Binding Path=CreatedAt}"  />
+                    <DataGridTemplateColumn Width="70" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnEdit" Content="edit" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=EditAreaCommand}"  />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="70" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDel" Content="hapus" Width="40"  Command="{Binding Source={StaticResource cvm_area},Path=Deleteareacommand}" CommandParameter="{Binding Source={StaticResource cvm_area}, Path=AreaData}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
     </Grid>
 </Page>

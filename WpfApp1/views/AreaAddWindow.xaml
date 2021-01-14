@@ -87,17 +87,26 @@
                  Text="{Binding Path=CurrentArea.AreaNumber,  TargetNullValue='', Mode=TwoWay}" 
                  x:Name="txtNum"
                  Grid.Column="2" />
-        
+
         <ComboBox Grid.Row="4" 
                   ItemsSource="{Binding Source={StaticResource vm_area}, Path=Kategoris, Mode=OneWay}" 
-                  DisplayMemberPath="KategoriHall"
+                  Height="35"
                   SelectedValuePath="KategoriId"
                   SelectedValue="{Binding Path=CurrentArea.KategoriId, Mode=TwoWay}"
                   Style="{StaticResource cbcenter}" 
                   Grid.Column="2" 
                   Name="cbKat"
-                  />
-        
+                  >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="35" >
+                        <Label Content="{Binding KategoriHall}" />
+                        <Label Content="{Binding katNumber}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
         <ComboBox Grid.Row="6" 
                   Style="{StaticResource cbcenter}" 
                   ItemsSource="{Binding  Source={StaticResource vm_area},  Path=FeesModels, Mode=OneWay}" 
@@ -106,11 +115,9 @@
                   SelectedValuePath="ParkFeesId"
                   Grid.Column="2" />
         
-        <Label  Content="" Style="{StaticResource cntAlert }" Grid.Row="3" Grid.Column="2"  />
-        <Label  Content="" Style="{StaticResource cntAlert }" Grid.Row="5" Grid.Column="2" />
-        <Label  Content="" Style="{StaticResource cntAlert }" Grid.Row="7" Grid.Column="2" />
+        
         <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal"  >
-            <Button Content="Save" Height="30" Tag="stAlert" Width="70" Command="{Binding SaveAreaCommand}" />
+            <Button Content="Save" Height="30" Tag="stAlert" Width="70" Command="{Binding SaveAreaCommand}" CommandParameter="{Binding Source={StaticResource vm_area}, Path=AreaData}" />
             <Button Content="Cancel" Height="30" Width="70" Margin="10,0,0,0" />
         </StackPanel>
     </Grid>

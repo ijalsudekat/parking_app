@@ -98,7 +98,7 @@ namespace WpfApp1.ViewModel.Area
                     var cs = await delayid();
                     if (cs)
                     {
-                        AreadeSave(saving, null);
+                        AreadeSave(new { },null);
                     }
                 }
                 else
@@ -114,7 +114,7 @@ namespace WpfApp1.ViewModel.Area
         }
         async Task<bool> delayid()
         {
-            await Task.Delay(3000);
+            await Task.Delay(1000);
             return true;
         }
 

@@ -30,6 +30,7 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
         <locvm:AreavIewModels x:Key="vm_area"/>
+        
         <locm:AreaModel x:Key="m_area"/>
         <cvt:BooleanToVisibilityConverter x:Key="acvt"/>
     </Window.Resources>
@@ -71,11 +72,11 @@
             Grid.Row="1" 
             Grid.Column="1" 
             x:Name="stAlert"
-            Background="{Binding Source={StaticResource vm_area}, Path=Coloring}"
-            Visibility="{Binding Source={StaticResource vm_area}, Path=Visibility, Converter={StaticResource acvt}}"
+            Background="{Binding Path=Coloring}"
+            Visibility="{Binding Path=Visibility, Converter={StaticResource acvt}}"
             Grid.ColumnSpan="2" >
             <iconPacks:PackIconMaterialLight Foreground="White" Name="iconc" Kind="AlertCircle" Margin="10,0,0,0" VerticalAlignment="Center" />
-            <Label Margin="10,0,0,0" Foreground="White" Content="{Binding Source={StaticResource vm_area}, Path=Message }" VerticalAlignment="Center" />
+            <Label Margin="10,0,0,0" Foreground="White" Content="{Binding Path=Message }" VerticalAlignment="Center" />
         </StackPanel>
         <Label Content="Number " Style="{StaticResource cntere}" Grid.Row="2" Grid.Column="1" />
         <Label Content="Kategori " HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1"/>
@@ -83,36 +84,45 @@
         
         <TextBox Grid.Row="2" 
                  Style="{StaticResource tcenter}" 
-                 Text="{Binding Path=AreaSelceted.AreaNumber, Mode=TwoWay}" 
+                 Text="{Binding Path=CurrentArea.AreaNumber, Mode=TwoWay}" 
                  x:Name="txtNum"
                  Grid.Column="2" 
                  />
         <StackPanel Grid.Row="4" Grid.Column="2" >
-            <Label Content="{Binding Path=KategoriHall, Mode=OneWay}" />
+            <StackPanel Orientation="Horizontal" >
+                <Label  Content="{Binding Path=CurrentArea.Kategori, Mode=OneWay}"  />
+                <Label  Content="{Binding Path=CurrentArea.KatNumber, Mode=OneWay}"  />
+            </StackPanel>
             <ComboBox 
                   ItemsSource="{Binding Source={StaticResource vm_area}, Path=Kategoris, Mode=OneWay}" 
                   Style="{StaticResource cbcenter}" 
-                  DisplayMemberPath="KategoriHall"
-                  SelectedItem="{Binding Path=CurrentArea.Kategori, Mode=TwoWay}"
-                  SelectedValue="{Binding Path=CurrentArea.KategoriId, Mode=TwoWay}"
+                  SelectedItem="{Binding Path=Kamodel, Mode=TwoWay}"
                   Name="cbKat" 
-                  />
+                  >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="30" >
+                            <Label Content="{Binding KategoriHall}" />
+                            <Label Content="{Binding katNumber}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
        
         <!--<Label Content="{Binding Path=AreaSelceted.ParkFeesValue, Mode=OneWay}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Margin="79.6,0,0.2,0" VerticalAlignment="Top" />-->
         <StackPanel Grid.Row="6" Grid.Column="2"  >
-            <Label Content="{ Binding Path=ParkFeesValue, Mode=OneWay}" />
+            <Label Content="{ Binding Path=CurrentArea.ParkFeesValue, Mode=OneWay}" />
             <ComboBox 
                   Style="{StaticResource cbcenter}" 
                   ItemsSource="{Binding Source={StaticResource vm_area},Path=FeesModels, Mode=OneWay}"
-                  SelectedItem="{Binding Path=CurrentArea.FeesValue, Mode=TwoWay}"
                   DisplayMemberPath="FeesValue"
-                  SelectedValue="{Binding Path=CurrentArea.ParkFeesId, Mode=TwoWay}"
+                  SelectedItem="{Binding Path=Feesmodel, Mode=TwoWay}"
                   />
         </StackPanel>
 
         <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal"  >
-            <Button Content="Save" Height="30" Tag="stAlert" Width="70"  Command="{Binding EditSaveCommand}" />
+            <Button Content="Save" Height="30" Tag="stAlert" Width="70" Command="{Binding Path=EditSaveCommand}" />
             <Button Content="Cancel" Height="30" Width="70"  Margin="10,0,0,0" />
         </StackPanel>
     </Grid>
