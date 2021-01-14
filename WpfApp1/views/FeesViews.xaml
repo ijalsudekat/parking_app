@@ -5,10 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:local="clr-namespace:WpfApp1.views"
+      xmlns:vmfe="clr-namespace:WpfApp1.ViewModel.fees"
+      xmlns:cvt="clr-namespace:WpfApp1.converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      x:Name="feesMo"
       Title="FeesViews">
-
+    <Page.Resources>
+        <cvt:BooleanToVisibilityConverter x:Key="cvtnum" />
+        <vmfe:fEESViewModels x:Key="mvm_fee"/>
+    </Page.Resources>
     <Grid Margin="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -18,7 +24,7 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="175" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
         <TextBlock
                 VerticalAlignment="Center"
@@ -50,11 +56,14 @@
                 <Run Text="Tambah data"  />
             </TextBlock>
             <Label Content="Value" Grid.Row="1" Grid.Column="0" FontSize="12" VerticalAlignment="Center" />
-            <TextBox x:Name="txtValue" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Center" />
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" >
-                <Button Width="60" Content="Simpan" />
+            <TextBox Text="{Binding Source={StaticResource mvm_fee}, Path=Ids, Mode=TwoWay}" Visibility="Hidden" />
+            <TextBox x:Name="txtValue" Text="{Binding Source={StaticResource mvm_fee}, Path=FeesVal, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Center" />
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" >
+                <Button Width="60" IsEnabled="{Binding Source={StaticResource mvm_fee}, Path=savnabled}" Content="Simpan" Command="{Binding Source={StaticResource mvm_fee}, Path=Tambahdata}" CommandParameter="{Binding Source={StaticResource mvm_fee}, Path=FeesData}" />
                 <Label/>
-                <Button Width="40" Content="Edit"  />
+                <Button Width="40" Content="reset" Command="{Binding Source={StaticResource mvm_fee}, Path=Resetng}" CommandParameter="{Binding Source={StaticResource mvm_fee}, Path=FeesData}" />
+                <Label/>
+                <Button Width="40" IsEnabled="{Binding Source={StaticResource mvm_fee}, Path=Ednabled}" Content="Edit" Command="{Binding Source={StaticResource mvm_fee}, Path=Saveeditcommand}" CommandParameter="{Binding Source={StaticResource mvm_fee}, Path=FeesData}" />
             </StackPanel>
             <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
@@ -108,39 +117,43 @@
                 <Button Width="60"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Search" />
 
             </Grid>
-           
-                <TextBlock
+
+            <TextBlock
             Grid.Row="2"
-            
+            Visibility="{Binding Source={StaticResource mvm_fee}, Path=Visibility, Converter={StaticResource cvtnum}}"
+            Background="{Binding Source={StaticResource mvm_fee}, Path=Coloring}"    
             VerticalAlignment="Center"
-            Background="#2ecc71"
+           
             Padding="6"
             >
             <iconPacks:PackIconMaterialLight Name="ikonb" Kind="AlertCircle" Foreground="White" Margin="14,0,0,0" />
-            <Run Text="Data berhasil disimpan" BaselineAlignment="Center" Foreground="White" />
-                </TextBlock>
-           
+            <Run Text="{Binding Source={StaticResource mvm_fee}, Path=Message}" BaselineAlignment="Center" Foreground="White" />
+            </TextBlock>
+
             <Grid Grid.Row="3">
-                <DataGrid x:Name="dgEmployee" 
-                  Grid.Row="4"
-                      Grid.Column="1"
+                <DataGrid x:Name="dgEmployee"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  Margin="5,8,8,8"
+                  Margin="5,8,8.2,99"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  ItemsSource="{Binding Path=EmployeeList}"
+                  ItemsSource="{Binding Source={StaticResource mvm_fee}, Path=FeesData}"
+                  SelectedItem="{Binding Source={StaticResource mvm_fee}, Path=SelectedFess}"
                   >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="No" Width="60" />
-                        <DataGridTextColumn Header="Fee Value" Width="90"/>
-                        <DataGridTextColumn Header="Created at" Width="80"  />
-                        <DataGridTextColumn Header="Status" Width="40"  />
-
-                        <DataGridTemplateColumn Header="action" >
+                        <DataGridTextColumn Header="Kode" Width="60" Binding="{Binding  Path=ParkFeesId}" />
+                        <DataGridTextColumn Header="Fee Value" Width="120" Binding="{Binding  Path=FeesValue}" />
+                        <DataGridTemplateColumn Width="100" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="btnEdit" Content="edit" />
+                                    <Button x:Name="btnEdit" Content="edit" Width="50" Command="{Binding Source={StaticResource mvm_fee}, Path=Editcommand}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  Width="100" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="Delete" Content="delete" Width="50"  Command="{Binding Source={StaticResource mvm_fee}, Path=Deletecommand}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

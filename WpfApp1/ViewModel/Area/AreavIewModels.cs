@@ -78,7 +78,7 @@ namespace WpfApp1.ViewModel.Area
             set { areasData = value; OnPropertyChanged("AreaData"); }
         }
 
-        private void getdata()
+        public void getdata()
         {
             AreaData = new ObservableCollection<AreaModel>(_services.GetAll());
         }
@@ -246,6 +246,7 @@ namespace WpfApp1.ViewModel.Area
                 var data = _services.Delete(SelectArea.AreaId);
                 if (data)
                 {
+                    getdata();
                     Coloring = new SolidColorBrush(Color.FromRgb(46, 204, 113));
                     Visibility = true;
                     Message = "Delete Data successfull";

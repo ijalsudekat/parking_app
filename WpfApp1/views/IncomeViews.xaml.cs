@@ -24,5 +24,10 @@ namespace WpfApp1.views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

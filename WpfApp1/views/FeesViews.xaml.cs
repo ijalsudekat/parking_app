@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel.fees;
 
 namespace WpfApp1.views
 {
@@ -20,9 +21,12 @@ namespace WpfApp1.views
     /// </summary>
     public partial class FeesViews : Page
     {
+        private fEESViewModels fEEsView;
         public FeesViews()
         {
             InitializeComponent();
+            fEEsView = new fEESViewModels();
+            this.DataContext = fEEsView;
         }
     }
 }

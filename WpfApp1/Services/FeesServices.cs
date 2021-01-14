@@ -18,6 +18,75 @@ namespace WpfApp1.Services
         {
         }
 
+
+        public bool insertData(int Fessval)
+        {
+            var client = new RestClient("http://localhost:5000/api/data-fees");
+            var request = new RestRequest(Method.POST);
+            Dictionary<string, string> bo = new Dictionary<string, string>();
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(new
+            {
+                parkFeesValue = Fessval
+               
+            });
+
+            var response = client.Post(request);
+
+            var oke = response.StatusCode.ToString();
+            JObject o = JObject.Parse(response.Content);
+
+            Console.WriteLine(response.Content);
+            return true;
+        }
+
+        public bool EditSave(int id, int values)
+        {
+            var client = new RestClient(String.Format("http://localhost:5000/api/data-fees/{0}",id));
+            var request = new RestRequest(Method.PUT);
+            Dictionary<string, string> bo = new Dictionary<string, string>();
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(new
+            {
+                parkFeesValue = values
+               
+            });
+
+            var response = client.Put(request);
+
+            var oke = response.StatusCode.ToString();
+            Console.WriteLine(response.Content);
+
+            if (oke == "OK")
+            {
+                
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool deleteData(int id)
+        {
+            var client = new RestClient(String.Format("http://localhost:5000/api/data-fees/{0}", id));
+            var request = new RestRequest(Method.DELETE);
+            request.AddHeader("Authorization", string.Format("Bearer {0}", new GetToken().getToken()));
+            IRestResponse response = client.Execute(request);
+            Dictionary<string, string> bo = new Dictionary<string, string>();
+
+            JObject o = JObject.Parse(response.Content);
+            Console.WriteLine(response.Content);
+            return true;
+        }
+
         public List<FeesModel> GetFees()
         {
             var arlist = new ArrayList();
@@ -46,6 +115,9 @@ namespace WpfApp1.Services
             }
         }
 
-
+        internal object SaveData(object katmodel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

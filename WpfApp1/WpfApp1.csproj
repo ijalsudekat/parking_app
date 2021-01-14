@@ -377,6 +377,9 @@
     <Compile Include="ViewModel\Area\AreavIewModels.cs" />
     <Compile Include="ViewModel\Area\EditAreaViewModels.cs" />
     <Compile Include="ViewModel\AuthViewModels.cs" />
+    <Compile Include="ViewModel\fees\AddFeesViewmodels.cs" />
+    <Compile Include="ViewModel\fees\EditFeesViewModels.cs" />
+    <Compile Include="ViewModel\fees\fEESViewModels.cs" />
     <Compile Include="ViewModel\History\HistoryViewModel.cs" />
     <Compile Include="ViewModel\Kategori\KatViewModels.cs" />
     <Compile Include="ViewModel\Kategori\Reseting.cs" />

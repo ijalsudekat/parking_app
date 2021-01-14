@@ -23,7 +23,11 @@ namespace WpfApp1.Models
         public int FeesValue
         {
             get { return parkFeesValue; }
-            set { parkFeesValue = value; }
+            set {
+                
+                parkFeesValue = value;
+
+            }
         }
 
 
