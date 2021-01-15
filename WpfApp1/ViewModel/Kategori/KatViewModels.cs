@@ -11,6 +11,7 @@ using System.Windows.Input;
 using WpfApp1.Models;
 using WpfApp1.Services;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace WpfApp1.ViewModel.Kategori
 {
@@ -51,7 +52,8 @@ namespace WpfApp1.ViewModel.Kategori
         public ObservableCollection<KategoriModels> Kategosris
         {
             get { return _kategoris; }
-            set { _kategoris = value;OnPropertyChanged("Kategosris"); }
+            set { _kategoris = value;
+                OnPropertyChanged("Kategosris"); }
         }
 
         private string filter;
@@ -69,14 +71,24 @@ namespace WpfApp1.ViewModel.Kategori
             get
             {
                 if (filtercommand == null)
-                    filtercommand = new RelayCommand(FilterHist);
+                    filtercommand = new RelayCommand<object>(FilterHist);
                 return filtercommand;
             }
         }
 
-        private void FilterHist()
+        private void FilterHist(object obj)
         {
-            Kategosris = new ObservableCollection<KategoriModels>(_services.GetFillter(Filter));
+            var fiktesan = Regex.Replace(Filter, "[^A-Za-z0-9_.]", " ");
+            ObservableCollection<KategoriModels> ktm = new ObservableCollection<KategoriModels>((IEnumerable<KategoriModels>)obj);
+            ObservableCollection<KategoriModels> kvw = new ObservableCollection<KategoriModels>();
+            var data = ktm.Where(cv => cv.KategoriHall.Contains(fiktesan) || cv.katNumber.ToString().Contains(fiktesan) || cv.KategoriId.ToString().Contains(fiktesan)).ToList();
+
+            foreach (var item in data)
+            {
+                kvw.Add(new KategoriModels() { KategoriHall = item.KategoriHall, KategoriId = item.KategoriId, katNumber = item.katNumber });
+            }
+
+            Kategosris = kvw;
         }
 
         public void getataKat()
